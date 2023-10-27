@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class BiQuad : IDisposable
+    public class BiQuad : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE

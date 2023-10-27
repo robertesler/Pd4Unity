@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Delay : IDisposable
+    public class Delay : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE

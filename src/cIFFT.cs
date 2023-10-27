@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class ComplexIFFT : IDisposable
+    public class cIFFT : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -28,13 +28,14 @@ namespace PdPlusPlus
         public static extern void cIFFT_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr cIFFT_perform0(IntPtr ptr, double* input);
+        public static extern IntPtr cIFFT_perform0(IntPtr ptr, double[] input);
+        
+#endif
+        private IntPtr m_cIFFT;
 
-        private IntPtr m_ComplexIFFT;
-
-        public ComplexIFFT()
+        public cIFFT()
         {
-            this.m_ComplexIFFT = cIFFT_allocate0();
+            this.m_cIFFT = cIFFT_allocate0();
         }
 
         public void Dispose()
@@ -45,10 +46,10 @@ namespace PdPlusPlus
         protected virtual void Dispose(bool mDispose)
         {
 
-            if (this.m_ComplexIFFT != IntPtr.Zero)
+            if (this.m_cIFFT != IntPtr.Zero)
             {
-                cIFFT_free0(this.m_ComplexIFFT);
-                this.m_ComplexIFFT = IntPtr.Zero;
+                cIFFT_free0(this.m_cIFFT);
+                this.m_cIFFT = IntPtr.Zero;
             }
 
             if (mDispose)
@@ -57,7 +58,7 @@ namespace PdPlusPlus
             }
         }
 
-        ~ComplexIFFT()
+        ~cIFFT()
         {
             Dispose(false);
         }
@@ -65,7 +66,7 @@ namespace PdPlusPlus
         #region Wrapper Methods
         public IntPtr perform(double[] input)
         {
-            return cIFFT_perform0(this.m_ComplexIFFT, input);
+            return cIFFT_perform0(this.m_cIFFT, input);
         }
 
 

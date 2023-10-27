@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class ReadSoundFile : IDisposable
+    public class ReadSoundFile : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -18,7 +18,7 @@ namespace PdPlusPlus
     public static extern void ReadSoundFile_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern void ReadSoundFile_open0(IntPtr ptr, string file, double onset);
+    public static extern void ReadSoundFile_open0(IntPtr ptr, char[] file, double onset);
 
     [DllImport("__Internal")]
      public static extern IntPtr ReadSoundFile_start0(IntPtr ptr);
@@ -40,32 +40,32 @@ namespace PdPlusPlus
 
 #else
 
-        [DllImport("pdplusplusUnity")]
-        public static extern IntPtr ReadSoundFile_allocate0();
+    [DllImport("pdplusplusUnity")]
+    public static extern IntPtr ReadSoundFile_allocate0();
 
-        [DllImport("pdplusplusUnity")]
-        public static extern void ReadSoundFile_free0(IntPtr ptr);
+    [DllImport("pdplusplusUnity")]
+    public static extern void ReadSoundFile_free0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")]
-        public static extern void ReadSoundFile_open0(IntPtr ptr, string file, double onset);
+    [DllImport("pdplusplusUnity")]
+    public static extern void ReadSoundFile_open0(IntPtr ptr, char[] file, double onset);
 
-        [DllImport("pdplusplusUnity")]
-        public static extern IntPtr ReadSoundFile_start0(IntPtr ptr);
+    [DllImport("pdplusplusUnity")]
+    public static extern IntPtr ReadSoundFile_start0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")]
-        public static extern void ReadSoundFile_stop0(IntPtr ptr);
+    [DllImport("pdplusplusUnity")]
+    public static extern void ReadSoundFile_stop0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")]
-        public static extern void ReadSoundFile_print0(IntPtr ptr);
+    [DllImport("pdplusplusUnity")]
+    public static extern void ReadSoundFile_print0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")]
-        public static extern void ReadSoundFile_setBufferSize0(IntPtr ptr, int bytes);
+    [DllImport("pdplusplusUnity")]
+    public static extern void ReadSoundFile_setBufferSize0(IntPtr ptr, int bytes);
 
-        [DllImport("pdplusplusUnity")]
-        public static extern int ReadSoundFile_getBufferSize0(IntPtr ptr);
+    [DllImport("pdplusplusUnity")]
+    public static extern int ReadSoundFile_getBufferSize0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")]
-        public static extern bool ReadSoundFile_isComplete0(IntPtr ptr);
+    [DllImport("pdplusplusUnity")]
+    public static extern bool ReadSoundFile_isComplete0(IntPtr ptr);
 
 #endif
 
@@ -136,7 +136,7 @@ namespace PdPlusPlus
 
         public bool isComplete()
         {
-            ReadSoundFile_isComplete0(this.m_ReadSoundFile);
+            return ReadSoundFile_isComplete0(this.m_ReadSoundFile);
         }
 
         #endregion Wrapper Methods

@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Oscillator : IDisposable
+    public class Oscillator : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE

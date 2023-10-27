@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Envelope : IDisposable
+    public class Envelope : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -18,7 +18,7 @@ namespace PdPlusPlus
     public static extern void Envelope_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static externdouble Envelope_perform0(IntPtr ptr, double input)
+    public static externdouble Envelope_perform0(IntPtr ptr, double input);
 
     [DllImport("__Internal")]
     public static extern void Envelope_setWindowSize0(IntPtr ptr, int ws);
@@ -40,7 +40,7 @@ namespace PdPlusPlus
         public static extern void Envelope_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static externdouble Envelope_perform0(IntPtr ptr, double input)
+        public static extern double Envelope_perform0(IntPtr ptr, double input);
 
     [DllImport("pdplusplusUnity")]
         public static extern void Envelope_setWindowSize0(IntPtr ptr, int ws);

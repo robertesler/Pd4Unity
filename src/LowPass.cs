@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class LowPass : IDisposable
+    public class LowPass : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -94,7 +94,7 @@ namespace PdPlusPlus
 
         public double getCutOff()
         {
-            LowPass_getCutoff0(this.m_LowPass);
+            return LowPass_getCutoff0(this.m_LowPass);
         }
 
         public void clear(double q)

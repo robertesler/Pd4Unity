@@ -7,34 +7,34 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class RealFFT : IDisposable
+    public class rIFFT : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
-    public static extern IntPtr rFFT_allocate0();
+    public static extern IntPtr rIFFT_allocate0();
 
     [DllImport("__Internal")]
-    public static extern void rFFT_free0(IntPtr ptr);
+    public static extern void rIFFT_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern IntPtr rFFT_perform0(IntPtr ptr, double input);
+    public static extern double rIFFT_perform0(IntPtr ptr, double* input;
 #else
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr rFFT_allocate0();
+        public static extern IntPtr rIFFT_allocate0();
 
         [DllImport("pdplusplusUnity")]
-        public static extern void rFFT_free0(IntPtr ptr);
+        public static extern void rIFFT_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr rFFT_perform0(IntPtr ptr, double input);
+        public static extern double rIFFT_perform0(IntPtr ptr, double[] input);
+#endif
+        private IntPtr m_rIFFT;
 
-        private IntPtr m_RealFFT;
-
-        public RealFFT()
+        public rIFFT()
         {
-            this.m_RealFFT = rFFT_allocate0();
+            this.m_rIFFT = rIFFT_allocate0();
         }
 
         public void Dispose()
@@ -45,10 +45,10 @@ namespace PdPlusPlus
         protected virtual void Dispose(bool mDispose)
         {
 
-            if (this.m_RealFFT != IntPtr.Zero)
+            if (this.m_rIFFT != IntPtr.Zero)
             {
-                rFFT_free0(this.m_RealFFT);
-                this.m_RealFFT = IntPtr.Zero;
+                rIFFT_free0(this.m_rIFFT);
+                this.m_rIFFT = IntPtr.Zero;
             }
 
             if (mDispose)
@@ -57,15 +57,15 @@ namespace PdPlusPlus
             }
         }
 
-        ~RealFFT()
+        ~rIFFT()
         {
             Dispose(false);
         }
 
         #region Wrapper Methods
-        public IntPtr perform(double input)
+        public double perform(double[] input)
         {
-            return rFFT_perform0(this.m_RealFFT, input);
+            return rIFFT_perform0(this.m_rIFFT, input);
         }
 
 

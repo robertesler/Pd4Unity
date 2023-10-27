@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class BandPass : IDisposable
+    public class BandPass : PdMaster, IDisposable
     {
 #if UNITY_IPHONE
     [DllImport("__Internal")]

@@ -8,12 +8,12 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class VoltageControlFilter : IDisposable
+    public class VoltageControlFilter : PdMaster, IDisposable
     {
-        struct vcfOutput
+        public struct vcfOutput
         {
-            double real;
-            double imaginary;
+            public double real;
+            public double imaginary;
         };
 
 #if UNITY_IPHONE
@@ -37,7 +37,7 @@ namespace PdPlusPlus
         public static extern void VoltageControlFilter_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern public static extern vcfOutput VoltageControlFilter_perform0(IntPtr ptr, double input, double centerFrequency);
+        public static extern vcfOutput VoltageControlFilter_perform0(IntPtr ptr, double input, double centerFrequency);
 
         [DllImport("pdplusplusUnity")]
         public static extern void VoltageControlFilter_setQ0(IntPtr ptr, double f);
@@ -79,7 +79,7 @@ namespace PdPlusPlus
         #region Wrapper Methods
         public vcfOutput perform(double input, double cf)
         {
-            return VoltageControlFilter_perform0(this.m_VoltageControlFilter, input, dt);
+            return VoltageControlFilter_perform0(this.m_VoltageControlFilter, input, cf);
         }
 
         public void setQ(double q)

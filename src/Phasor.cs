@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Phasor : IDisposable
+    public class Phasor : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -21,19 +21,19 @@ namespace PdPlusPlus
     public static extern double Phasor_perform0(IntPtr ptr, double input);
 
     [DllImport("__Internal")]
-    public static extern void Phasor_setPhase0(IntPtr ptr, double);
+    public static extern void Phasor_setPhase0(IntPtr ptr, double ph);
 
     [DllImport("__Internal")]
     public static extern double Phasor_getPhase0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern void Phasor_setFrequency0(IntPtr ptr, double);
+    public static extern void Phasor_setFrequency0(IntPtr ptr, double f);
 
     [DllImport("__Internal")]
     public static extern double Phasor_getFrequency0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern void Phasor_setVolume0(IntPtr ptr, double);
+    public static extern void Phasor_setVolume0(IntPtr ptr, double v);
 
     [DllImport("__Internal")]
     public static extern double Phasor_getVolume0(IntPtr ptr);
@@ -50,19 +50,19 @@ namespace PdPlusPlus
         public static extern double Phasor_perform0(IntPtr ptr, double input);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void Phasor_setPhase0(IntPtr ptr, double);
+        public static extern void Phasor_setPhase0(IntPtr ptr, double ph);
 
         [DllImport("pdplusplusUnity")]
         public static extern double Phasor_getPhase0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void Phasor_setFrequency0(IntPtr ptr, double);
+        public static extern void Phasor_setFrequency0(IntPtr ptr, double f);
 
         [DllImport("pdplusplusUnity")]
         public static extern double Phasor_getFrequency0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void Phasor_setVolume0(IntPtr ptr, double);
+        public static extern void Phasor_setVolume0(IntPtr ptr, double v);
 
         [DllImport("pdplusplusUnity")]
         public static extern double Phasor_getVolume0(IntPtr ptr);

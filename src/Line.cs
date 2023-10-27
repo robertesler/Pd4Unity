@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Line : IDisposable
+    public class Line : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE

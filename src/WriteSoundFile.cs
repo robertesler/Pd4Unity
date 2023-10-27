@@ -8,7 +8,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class WriteSoundFile : IDisposable
+    public class WriteSoundFile : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -19,11 +19,11 @@ namespace PdPlusPlus
     public static extern void WriteSoundFile_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern void WriteSoundFile_open0(IntPtr ptr, char* f, unsigned int nChannels,
+    public static extern void WriteSoundFile_open0(IntPtr ptr, char[] f, int nChannels,
             long type, long format);
 
     [DllImport("__Internal")]
-    public static extern void WriteSoundFile_start0(IntPtr ptr, double* input);
+    public static extern void WriteSoundFile_start0(IntPtr ptr, double[] input);
 
     [DllImport("__Internal")]
     public static extern void WriteSoundFile_stop0(IntPtr ptr);
@@ -39,11 +39,11 @@ namespace PdPlusPlus
         public static extern void WriteSoundFile_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void WriteSoundFile_open0(IntPtr ptr, char* f, unsigned int nChannels,
+        public static extern void WriteSoundFile_open0(IntPtr ptr, char[] f, int nChannels,
                 long type, long format);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void WriteSoundFile_start0(IntPtr ptr, double* input);
+        public static extern void WriteSoundFile_start0(IntPtr ptr, double[] input);
 
         [DllImport("pdplusplusUnity")]
         public static extern void WriteSoundFile_stop0(IntPtr ptr);

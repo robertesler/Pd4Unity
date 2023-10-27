@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class SlewLowPass : IDisposable
+    public class SlewLowPass : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE

@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Noise : IDisposable
+    public class Noise : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE

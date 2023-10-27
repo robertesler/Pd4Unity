@@ -8,7 +8,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Timer : IDisposable
+    public class Timer : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -25,7 +25,7 @@ namespace PdPlusPlus
     public static extern void Timer_start0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static externvoid Timer_stop0(IntPtr ptr);
+    public static extern void Timer_stop0(IntPtr ptr);
 
     [DllImport("__Internal")]
     public static extern void Timer_reset0(IntPtr ptr);
@@ -45,7 +45,7 @@ namespace PdPlusPlus
         public static extern void Timer_start0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static externvoid Timer_stop0(IntPtr ptr);
+        public static extern void Timer_stop0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
         public static extern void Timer_reset0(IntPtr ptr);
@@ -85,7 +85,7 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public int perform()
+        public double perform()
         {
             return Timer_perform0(this.m_Timer);
         }
@@ -95,7 +95,7 @@ namespace PdPlusPlus
             Timer_start0(this.m_Timer);
         }
 
-        public StringSplitOptions()
+        public void StringSplitOptions()
         {
             Timer_stop0(this.m_Timer);
         }

@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Convolution : IDisposable
+    public class Convolution : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE

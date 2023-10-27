@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class BobFilter : IDisposable
+    public class BobFilter : PdMaster, IDisposable
     {
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -19,31 +19,31 @@ namespace PdPlusPlus
     [DllImport("__Internal")]
     public static extern double BobFilter_perform0(IntPtr ptr, double f);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern void BobFilter_setCutoffFrequency0(IntPtr ptr, double cf);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern void BobFilter_setResonance0(IntPtr ptr, double r);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern void BobFilter_setSaturation0(IntPtr ptr, double s);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern void BobFilter_setOversampling0(IntPtr ptr, double o);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern double BobFilter_getCutoffFrequency0(IntPtr ptr);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern double BobFilter_getResonance0(IntPtr ptr);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern void BobFilter_error0(IntPtr ptr);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern void BobFilter_clear0(IntPtr ptr);
 
-    [DllImport("__Internal")
+    [DllImport("__Internal")]
     public static extern void BobFilter_print0(IntPtr ptr);
 #else
 
@@ -56,31 +56,31 @@ namespace PdPlusPlus
         [DllImport("pdplusplusUnity")]
         public static extern double BobFilter_perform0(IntPtr ptr, double f);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern void BobFilter_setCutoffFrequency0(IntPtr ptr, double cf);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern void BobFilter_setResonance0(IntPtr ptr, double r);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern void BobFilter_setSaturation0(IntPtr ptr, double s);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern void BobFilter_setOversampling0(IntPtr ptr, double o);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern double BobFilter_getCutoffFrequency0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern double BobFilter_getResonance0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern void BobFilter_error0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern void BobFilter_clear0(IntPtr ptr);
 
-        [DllImport("pdplusplusUnity")
+        [DllImport("pdplusplusUnity")]
         public static extern void BobFilter_print0(IntPtr ptr);
 #endif
 
@@ -142,7 +142,7 @@ namespace PdPlusPlus
             BobFilter_setOversampling0(this.m_BobFilter, o);
         }
 
-        public doubler getCutoffFrequency()
+        public double getCutoffFrequency()
         {
             return BobFilter_getCutoffFrequency0(this.m_BobFilter);
         }

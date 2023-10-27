@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class SoundFiler : IDisposable
+    public class SoundFiler : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -22,7 +22,7 @@ namespace PdPlusPlus
 
     [DllImport("__Internal")]
     public static extern void SoundFiler_write0(IntPtr ptr, string fileName,
-           unsigned int nChannels,
+           int nChannels,
            long type,
            long format,
            IntPtr array,
@@ -45,14 +45,14 @@ namespace PdPlusPlus
 
         [DllImport("pdplusplusUnity")]
         public static extern void SoundFiler_write0(IntPtr ptr, string fileName,
-               unsigned int nChannels,
+               int nChannels,
                long type,
                long format,
                IntPtr array,
                long count);
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr SoundFiler_getArray0(IntPtr);
+        public static extern IntPtr SoundFiler_getArray0(IntPtr ptr);
 
 #endif
 

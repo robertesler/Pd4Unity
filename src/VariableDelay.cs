@@ -8,7 +8,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class VariableDelay : IDisposable
+    public class VariableDelay : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -78,7 +78,7 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public int perform(double dt)
+        public double perform(double dt)
         {
             return VariableDelay_perform0(this.m_VariableDelay, dt);
         }

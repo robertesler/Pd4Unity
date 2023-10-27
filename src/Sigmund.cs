@@ -7,18 +7,18 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Sigmund : IDisposable
+    public class Sigmund : PdMaster, IDisposable
     {
-
-        struct sigmundPackage
+        [StructLayout(LayoutKind.Sequential)]
+        public struct sigmundPackage
         {
-            double pitch = 0;
-            double notes = 0;
-            double envelope = 0;
-            double** peaks;
-            double** tracks;
-            int peakSize = 0;
-            int trackSize = 0;
+            public double pitch;
+            public double notes;
+            public double envelope;
+            public double[][] peaks;
+            public double[][] tracks;
+            public int peakSize;
+            public int trackSize;
 
         };
 
@@ -273,7 +273,7 @@ namespace PdPlusPlus
             Sigmund_setMinPower0(this.m_Sigmund, mp);
         }
 
-        public void setGrowth()
+        public void setGrowth(double g)
         {
             Sigmund_setGrowth0(this.m_Sigmund, g);
         }
@@ -319,7 +319,7 @@ namespace PdPlusPlus
             return Sigmund_getMaxFrequency0(this.m_Sigmund);
         }
 
-        public getVibrato()
+        public double getVibrato()
         {
             return Sigmund_getVibrato0(this.m_Sigmund);
         }
@@ -350,7 +350,7 @@ namespace PdPlusPlus
         }
         public int getPeakBool()
         {
-            return Sigmund_getPeakBool0(this.m_Sigmund)
+            return Sigmund_getPeakBool0(this.m_Sigmund);
         }
 
         public int getTrackBool()

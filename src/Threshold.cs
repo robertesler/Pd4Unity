@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Threshold : IDisposable
+    public class Threshold : PdMaster, IDisposable
 {
 
 #if UNITY_IPHONE

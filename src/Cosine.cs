@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class Cosine : IDisposable
+    public class Cosine : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE

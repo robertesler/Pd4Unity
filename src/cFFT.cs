@@ -7,34 +7,34 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class RealIFFT : IDisposable
+    public class cFFT : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
-    public static extern IntPtr rIFFT_allocate0();
+    public static extern IntPtr cFFT_allocate0();
 
     [DllImport("__Internal")]
-    public static extern void rIFFT_free0(IntPtr ptr);
+    public static extern void cFFT_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern double rIFFT_perform0(IntPtr ptr, double* input;
+    public static extern IntPtr cFFT_perform0(IntPtr ptr, double real, double imaginary);
 #else
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr rIFFT_allocate0();
+        public static extern IntPtr cFFT_allocate0();
 
         [DllImport("pdplusplusUnity")]
-        public static extern void rIFFT_free0(IntPtr ptr);
+        public static extern void cFFT_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern double rIFFT_perform0(IntPtr ptr, double* input);
+        public static extern IntPtr cFFT_perform0(IntPtr ptr, double real, double imaginary);
+#endif
+        private IntPtr m_cFFT;
 
-        private IntPtr m_RealIFFT;
-
-        public RealIFFT()
+        public cFFT()
         {
-            this.m_RealIFFT = rIFFT_allocate0();
+            this.m_cFFT = cFFT_allocate0();
         }
 
         public void Dispose()
@@ -45,10 +45,10 @@ namespace PdPlusPlus
         protected virtual void Dispose(bool mDispose)
         {
 
-            if (this.m_RealIFFT != IntPtr.Zero)
+            if (this.m_cFFT != IntPtr.Zero)
             {
-                rIFFT_free0(this.m_RealIFFT);
-                this.m_RealIFFT = IntPtr.Zero;
+                cFFT_free0(this.m_cFFT);
+                this.m_cFFT = IntPtr.Zero;
             }
 
             if (mDispose)
@@ -57,18 +57,19 @@ namespace PdPlusPlus
             }
         }
 
-        ~RealIFFT()
+        ~cFFT()
         {
             Dispose(false);
         }
 
         #region Wrapper Methods
-        public double perform(double[] input)
+        public IntPtr perform(double real, double imaginary)
         {
-            return rIFFT_perform0(this.m_RealIFFT, input);
+            return cFFT_perform0(this.m_cFFT, real, imaginary);
         }
 
 
         #endregion Wrapper Methods
     }
+
 }

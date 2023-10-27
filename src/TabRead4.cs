@@ -7,7 +7,7 @@ using System;
 namespace PdPlusPlus
 {
 
-    public class TabRead4 : IDisposable
+    public class TabRead4 : PdMaster, IDisposable
     {
 
 #if UNITY_IPHONE
@@ -50,7 +50,7 @@ namespace PdPlusPlus
         public static extern int TabRead4_getTableSize0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void TabRead4_setOnset0(IntPtr ptr, double);
+        public static extern void TabRead4_setOnset0(IntPtr ptr, double o);
 
         [DllImport("pdplusplusUnity")]
         public static extern double TabRead4_getOnset0(IntPtr ptr);
@@ -102,7 +102,7 @@ namespace PdPlusPlus
 
         public int getTableSize()
         {
-            return TabRead4_getTableSize0(IntPtr ptr);
+            return TabRead4_getTableSize0(this.m_TabRead4);
         }
 
         public void setOnset(double onset)
