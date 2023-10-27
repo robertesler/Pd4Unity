@@ -4,8 +4,11 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class Convolution : IDisposable
+namespace PdPlusPlus
 {
+
+    public class Convolution : IDisposable
+    {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -25,70 +28,72 @@ public class Convolution : IDisposable
 
 #else
 
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr Convolution_allocate0();
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr Convolution_allocate0();
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Convolution_free0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Convolution_free0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double Convolution_perform0(IntPtr ptr, double filter, double control);
+        [DllImport("pdplusplusUnity")]
+        public static extern double Convolution_perform0(IntPtr ptr, double filter, double control);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Convolution_setSquelch0(IntPtr ptr, int sq);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Convolution_setSquelch0(IntPtr ptr, int sq);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern int Convolution_getSquelch0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern int Convolution_getSquelch0(IntPtr ptr);
 
 #endif
 
-    private IntPtr m_Convolution;
+        private IntPtr m_Convolution;
 
-    public Convolution()
-    {
-        this.m_Convolution = Convolution_allocate0();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-    }
-
-    protected virtual void Dispose(bool mDispose)
-    {
-
-        if (this.m_Convolution != IntPtr.Zero)
+        public Convolution()
         {
-            Convolution_free0(this.m_Convolution);
-            this.m_Convolution = IntPtr.Zero;
+            this.m_Convolution = Convolution_allocate0();
         }
 
-        if (mDispose)
+        public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
+
+        protected virtual void Dispose(bool mDispose)
+        {
+
+            if (this.m_Convolution != IntPtr.Zero)
+            {
+                Convolution_free0(this.m_Convolution);
+                this.m_Convolution = IntPtr.Zero;
+            }
+
+            if (mDispose)
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
+
+        ~Convolution()
+        {
+            Dispose(false);
+        }
+
+        #region Wrapper Methods
+        public double perform(double filter, double control)
+        {
+            return Convolution_perform0(this.m_Convolution, filter, control);
+        }
+
+        public void setSquelch(int sq)
+        {
+            Convolution_setSquelch0(this.m_Convolution, sq);
+        }
+
+        public int getSquelch()
+        {
+            return Convolution_getSquelch0(this.m_Convolution);
+        }
+
+        #endregion Wrapper Methods
     }
 
-    ~Convolution()
-    {
-        Dispose(false);
-    }
-
-    #region Wrapper Methods
-    public double perform(double filter, double control)
-    {
-        return Convolution_perform0(this.m_Convolution, filter, control);
-    }
-
-    public void setSquelch(int sq)
-    {
-        Convolution_setSquelch0(this.m_Convolution, sq);
-    }
-
-    public int getSquelch()
-    {
-        return Convolution_getSquelch0(this.m_Convolution);
-    }
-    
-    #endregion Wrapper Methods
 }

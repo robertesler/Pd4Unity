@@ -4,8 +4,12 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class Timer : IDisposable
+
+namespace PdPlusPlus
 {
+
+    public class Timer : IDisposable
+    {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -28,80 +32,80 @@ public class Timer : IDisposable
 
 #else
 
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr Timer_allocate0();
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr Timer_allocate0();
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Timer_free0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Timer_free0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double Timer_perform0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern double Timer_perform0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Timer_start0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Timer_start0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static externvoid Timer_stop0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static externvoid Timer_stop0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Timer_reset0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Timer_reset0(IntPtr ptr);
 
 #endif
 
-    private IntPtr m_Timer;
+        private IntPtr m_Timer;
 
-    public Timer()
-    {
-        this.m_Timer = Timer_allocate0();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-    }
-
-    protected virtual void Dispose(bool mDispose)
-    {
-
-        if (this.m_Timer != IntPtr.Zero)
+        public Timer()
         {
-            Timer_free0(this.m_Timer);
-            this.m_Timer = IntPtr.Zero;
+            this.m_Timer = Timer_allocate0();
         }
 
-        if (mDispose)
+        public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
-    }
 
-    ~Timer()
-    {
-        Dispose(false);
-    }
+        protected virtual void Dispose(bool mDispose)
+        {
 
-    #region Wrapper Methods
-    public int perform()
-    {
-        return Timer_perform0(this.m_Timer);
-    }
+            if (this.m_Timer != IntPtr.Zero)
+            {
+                Timer_free0(this.m_Timer);
+                this.m_Timer = IntPtr.Zero;
+            }
 
-    public void start()
-    {
-        Timer_start0(this.m_Timer);
-    }
-   
-    public StringSplitOptions()
-    {
-        Timer_stop0(this.m_Timer);
-    }
+            if (mDispose)
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
 
-    public void reset()
-    {
-        Timer_reset0(this.m_Timer);
-    }
-    
+        ~Timer()
+        {
+            Dispose(false);
+        }
 
-    #endregion Wrapper Methods
+        #region Wrapper Methods
+        public int perform()
+        {
+            return Timer_perform0(this.m_Timer);
+        }
+
+        public void start()
+        {
+            Timer_start0(this.m_Timer);
+        }
+
+        public StringSplitOptions()
+        {
+            Timer_stop0(this.m_Timer);
+        }
+
+        public void reset()
+        {
+            Timer_reset0(this.m_Timer);
+        }
+
+
+        #endregion Wrapper Methods
+    }
 }
-

@@ -4,9 +4,12 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class Noise : IDisposable
+namespace PdPlusPlus
 {
-    
+
+    public class Noise : IDisposable
+    {
+
 #if UNITY_IPHONE
     [DllImport("__Internal")]
     public static extern IntPtr Noise_allocate0(); 
@@ -17,52 +20,53 @@ public class Noise : IDisposable
     [DllImport("__Internal")]
     public static extern double Noise_perform0(IntPtr ptr);
 #else
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr Noise_allocate0();
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr Noise_allocate0();
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Noise_free0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Noise_free0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double Noise_perform0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern double Noise_perform0(IntPtr ptr);
 #endif
 
-    private IntPtr m_Noise;
+        private IntPtr m_Noise;
 
-    public Noise() 
-    {
-        this.m_Noise = Noise_allocate0();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true); 
-    }
-
-    protected virtual void Dispose(bool mDispose)
-    {
-
-        if (this.m_Noise != IntPtr.Zero)
+        public Noise()
         {
-            Noise_free0(this.m_Noise);
-            this.m_Noise = IntPtr.Zero;
+            this.m_Noise = Noise_allocate0();
         }
 
-        if (mDispose)
+        public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
-    }
 
-    ~Noise()
-    {
-        Dispose(false);
-    }
+        protected virtual void Dispose(bool mDispose)
+        {
 
-    #region Wrapper Methods
-    public double perform()
-    {
-        return Noise_perform0(this.m_Noise);
+            if (this.m_Noise != IntPtr.Zero)
+            {
+                Noise_free0(this.m_Noise);
+                this.m_Noise = IntPtr.Zero;
+            }
+
+            if (mDispose)
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
+
+        ~Noise()
+        {
+            Dispose(false);
+        }
+
+        #region Wrapper Methods
+        public double perform()
+        {
+            return Noise_perform0(this.m_Noise);
+        }
+        #endregion Wrapper Methods
     }
-    #endregion Wrapper Methods
 }

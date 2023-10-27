@@ -4,8 +4,11 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class Phasor : IDisposable
+namespace PdPlusPlus
 {
+
+    public class Phasor : IDisposable
+    {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -37,102 +40,104 @@ public class Phasor : IDisposable
 
 #else
 
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr Phasor_allocate0();
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr Phasor_allocate0();
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Phasor_free0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Phasor_free0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double Phasor_perform0(IntPtr ptr, double input);
+        [DllImport("pdplusplusUnity")]
+        public static extern double Phasor_perform0(IntPtr ptr, double input);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Phasor_setPhase0(IntPtr ptr, double);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Phasor_setPhase0(IntPtr ptr, double);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double Phasor_getPhase0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern double Phasor_getPhase0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Phasor_setFrequency0(IntPtr ptr, double);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Phasor_setFrequency0(IntPtr ptr, double);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double Phasor_getFrequency0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern double Phasor_getFrequency0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Phasor_setVolume0(IntPtr ptr, double);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Phasor_setVolume0(IntPtr ptr, double);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double Phasor_getVolume0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern double Phasor_getVolume0(IntPtr ptr);
 
 #endif
 
-    private IntPtr m_Phasor;
+        private IntPtr m_Phasor;
 
-    public Phasor()
-    {
-        this.m_Phasor = Phasor_allocate0();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-    }
-
-    protected virtual void Dispose(bool mDispose)
-    {
-
-        if (this.m_Phasor != IntPtr.Zero)
+        public Phasor()
         {
-            Phasor_free0(this.m_Phasor);
-            this.m_Phasor = IntPtr.Zero;
+            this.m_Phasor = Phasor_allocate0();
         }
 
-        if (mDispose)
+        public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
+
+        protected virtual void Dispose(bool mDispose)
+        {
+
+            if (this.m_Phasor != IntPtr.Zero)
+            {
+                Phasor_free0(this.m_Phasor);
+                this.m_Phasor = IntPtr.Zero;
+            }
+
+            if (mDispose)
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
+
+        ~Phasor()
+        {
+            Dispose(false);
+        }
+
+        #region Wrapper Methods
+        public double perform(double input)
+        {
+            return Phasor_perform0(this.m_Phasor, input);
+        }
+
+        public void setPhase(double pf)
+        {
+            Phasor_setPhase0(this.m_Phasor, pf);
+        }
+
+        public double getPhase()
+        {
+            return Phasor_getPhase0(this.m_Phasor);
+        }
+
+        public void setFrequency(double f)
+        {
+            Phasor_setFrequency0(this.m_Phasor, f);
+        }
+
+        public double getFrequency()
+        {
+            return Phasor_getFrequency0(this.m_Phasor);
+        }
+
+        public void setVolume(double v)
+        {
+            Phasor_setVolume0(this.m_Phasor, v);
+        }
+
+        public double getVolume()
+        {
+            return Phasor_getVolume0(this.m_Phasor);
+        }
+
+        #endregion Wrapper Methods
     }
 
-    ~Phasor()
-    {
-        Dispose(false);
-    }
-
-    #region Wrapper Methods
-    public double perform(double input)
-    {
-        return Phasor_perform0(this.m_Phasor, input);
-    }
-
-    public void setPhase(double pf)
-    {
-        Phasor_setPhase0(this.m_Phasor, pf);
-    }
-
-    public double getPhase()
-    {
-        return Phasor_getPhase0(this.m_Phasor);
-    }
-
-    public void setFrequency(double f)
-    {
-        Phasor_setFrequency0(this.m_Phasor, f);
-    }
-
-    public double getFrequency()
-    {
-        return Phasor_getFrequency0(this.m_Phasor);
-    }
-    
-    public void setVolume(double v)
-    {
-        Phasor_setVolume0(this.m_Phasor, v);
-    }
-
-    public double getVolume()
-    {
-        return Phasor_getVolume0(this.m_Phasor);
-    }
-   
-    #endregion Wrapper Methods
 }

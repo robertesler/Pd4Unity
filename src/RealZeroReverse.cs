@@ -4,8 +4,11 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class RealZeroReverse : IDisposable
+namespace PdPlusPlus
 {
+
+    public class RealZeroReverse : IDisposable
+    {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -25,70 +28,71 @@ public class RealZeroReverse : IDisposable
 
 #else
 
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr RealZeroReverse_allocate0();
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr RealZeroReverse_allocate0();
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void RealZeroReverse_free0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void RealZeroReverse_free0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double RealZeroReverse_perform0(IntPtr ptr, double r, double i);
+        [DllImport("pdplusplusUnity")]
+        public static extern double RealZeroReverse_perform0(IntPtr ptr, double r, double i);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void RealZeroReverse_set0(IntPtr ptr, double real, double imaginary);
+        [DllImport("pdplusplusUnity")]
+        public static extern void RealZeroReverse_set0(IntPtr ptr, double real, double imaginary);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void RealZeroReverse_clear0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void RealZeroReverse_clear0(IntPtr ptr);
 
 #endif
 
-    private IntPtr m_RealZeroReverse;
+        private IntPtr m_RealZeroReverse;
 
-    public RealZeroReverse()
-    {
-        this.m_RealZeroReverse = RealZeroReverse_allocate0();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-    }
-
-    protected virtual void Dispose(bool mDispose)
-    {
-
-        if (this.m_RealZeroReverse != IntPtr.Zero)
+        public RealZeroReverse()
         {
-            RealZeroReverse_free0(this.m_RealZeroReverse);
-            this.m_RealZeroReverse = IntPtr.Zero;
+            this.m_RealZeroReverse = RealZeroReverse_allocate0();
         }
 
-        if (mDispose)
+        public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
-    }
 
-    ~RealZeroReverse()
-    {
-        Dispose(false);
-    }
+        protected virtual void Dispose(bool mDispose)
+        {
 
-    #region Wrapper Methods
-    public double perform(double r, double i)
-    {
-        return RealZeroReverse_perform0(this.m_RealZeroReverse, r, i);
-    }
+            if (this.m_RealZeroReverse != IntPtr.Zero)
+            {
+                RealZeroReverse_free0(this.m_RealZeroReverse);
+                this.m_RealZeroReverse = IntPtr.Zero;
+            }
 
-    public void set(double real, double imaginary)
-    {
-        RealZeroReverse_set0(this.m_RealZeroReverse, real, imaginary);
-    }
+            if (mDispose)
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
 
-    public void clear()
-    {
-        RealZeroReverse_clear0(this.m_RealZeroReverse);
-    }
+        ~RealZeroReverse()
+        {
+            Dispose(false);
+        }
 
-    #endregion Wrapper Methods
+        #region Wrapper Methods
+        public double perform(double r, double i)
+        {
+            return RealZeroReverse_perform0(this.m_RealZeroReverse, r, i);
+        }
+
+        public void set(double real, double imaginary)
+        {
+            RealZeroReverse_set0(this.m_RealZeroReverse, real, imaginary);
+        }
+
+        public void clear()
+        {
+            RealZeroReverse_clear0(this.m_RealZeroReverse);
+        }
+
+        #endregion Wrapper Methods
+    }
 }

@@ -4,8 +4,11 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class ReadSoundFile : IDisposable
+namespace PdPlusPlus
 {
+
+    public class ReadSoundFile : IDisposable
+    {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -37,104 +40,105 @@ public class ReadSoundFile : IDisposable
 
 #else
 
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr ReadSoundFile_allocate0();
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr ReadSoundFile_allocate0();
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void ReadSoundFile_free0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void ReadSoundFile_free0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void ReadSoundFile_open0(IntPtr ptr, string file, double onset);
+        [DllImport("pdplusplusUnity")]
+        public static extern void ReadSoundFile_open0(IntPtr ptr, string file, double onset);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr ReadSoundFile_start0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr ReadSoundFile_start0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void ReadSoundFile_stop0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void ReadSoundFile_stop0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void ReadSoundFile_print0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void ReadSoundFile_print0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void ReadSoundFile_setBufferSize0(IntPtr ptr, int bytes);
+        [DllImport("pdplusplusUnity")]
+        public static extern void ReadSoundFile_setBufferSize0(IntPtr ptr, int bytes);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern int ReadSoundFile_getBufferSize0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern int ReadSoundFile_getBufferSize0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern bool ReadSoundFile_isComplete0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern bool ReadSoundFile_isComplete0(IntPtr ptr);
 
 #endif
 
-    private IntPtr m_ReadSoundFile;
+        private IntPtr m_ReadSoundFile;
 
-    public ReadSoundFile()
-    {
-        this.m_ReadSoundFile = ReadSoundFile_allocate0();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-    }
-
-    protected virtual void Dispose(bool mDispose)
-    {
-
-        if (this.m_ReadSoundFile != IntPtr.Zero)
+        public ReadSoundFile()
         {
-            ReadSoundFile_free0(this.m_ReadSoundFile);
-            this.m_ReadSoundFile = IntPtr.Zero;
+            this.m_ReadSoundFile = ReadSoundFile_allocate0();
         }
 
-        if (mDispose)
+        public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
-    }
 
-    ~ReadSoundFile()
-    {
-        Dispose(false);
-    }
+        protected virtual void Dispose(bool mDispose)
+        {
 
-    #region Wrapper Methods
+            if (this.m_ReadSoundFile != IntPtr.Zero)
+            {
+                ReadSoundFile_free0(this.m_ReadSoundFile);
+                this.m_ReadSoundFile = IntPtr.Zero;
+            }
 
-    public void open(string file, double onset)
-    {
-        char[] f = file.ToCharArray();
-        ReadSoundFile_open0(this.m_ReadSoundFile, f, onset);
-    }
+            if (mDispose)
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
 
-    public IntPtr start()
-    {
-        return ReadSoundFile_start0(this.m_ReadSoundFile);
-    }
-    
-    public void stop()
-    {
-        ReadSoundFile_stop0(this.m_ReadSoundFile);
-    }
+        ~ReadSoundFile()
+        {
+            Dispose(false);
+        }
 
-    public void print()
-    {
-        ReadSoundFile_print0(this.m_ReadSoundFile);
-    }
+        #region Wrapper Methods
 
-    public void setBufferSize(int bytes)
-    {
-        ReadSoundFile_setBufferSize0(this.m_ReadSoundFile,  bytes);
-    }
+        public void open(string file, double onset)
+        {
+            char[] f = file.ToCharArray();
+            ReadSoundFile_open0(this.m_ReadSoundFile, f, onset);
+        }
 
-    public int getBufferSize()
-    {
-        return ReadSoundFile_getBufferSize0(this.m_ReadSoundFile);
-    }
+        public IntPtr start()
+        {
+            return ReadSoundFile_start0(this.m_ReadSoundFile);
+        }
 
-    public bool isComplete()
-    {
-        ReadSoundFile_isComplete0(this.m_ReadSoundFile);
-    }
+        public void stop()
+        {
+            ReadSoundFile_stop0(this.m_ReadSoundFile);
+        }
 
-    #endregion Wrapper Methods
+        public void print()
+        {
+            ReadSoundFile_print0(this.m_ReadSoundFile);
+        }
+
+        public void setBufferSize(int bytes)
+        {
+            ReadSoundFile_setBufferSize0(this.m_ReadSoundFile, bytes);
+        }
+
+        public int getBufferSize()
+        {
+            return ReadSoundFile_getBufferSize0(this.m_ReadSoundFile);
+        }
+
+        public bool isComplete()
+        {
+            ReadSoundFile_isComplete0(this.m_ReadSoundFile);
+        }
+
+        #endregion Wrapper Methods
+    }
 }

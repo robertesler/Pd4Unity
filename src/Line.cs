@@ -4,8 +4,11 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class Line : IDisposable
+namespace PdPlusPlus
 {
+
+    public class Line : IDisposable
+    {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -24,69 +27,70 @@ public class Line : IDisposable
     public static extern void Line_set0(IntPtr ptr, double target, double time);
 #else
 
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr Line_allocate0();
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr Line_allocate0();
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Line_free0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Line_free0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double Line_perform0(IntPtr ptr, double target, double time);
+        [DllImport("pdplusplusUnity")]
+        public static extern double Line_perform0(IntPtr ptr, double target, double time);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Line_stop0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Line_stop0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void Line_set0(IntPtr ptr, double target, double time);
+        [DllImport("pdplusplusUnity")]
+        public static extern void Line_set0(IntPtr ptr, double target, double time);
 #endif
 
-    private IntPtr m_Line;
+        private IntPtr m_Line;
 
-    public Line()
-    {
-        this.m_Line = Line_allocate0();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-    }
-
-    protected virtual void Dispose(bool mDispose)
-    {
-
-        if (this.m_Line != IntPtr.Zero)
+        public Line()
         {
-            Line_free0(this.m_Line);
-            this.m_Line = IntPtr.Zero;
+            this.m_Line = Line_allocate0();
         }
 
-        if (mDispose)
+        public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
-    }
 
-    ~Line()
-    {
-        Dispose(false);
-    }
+        protected virtual void Dispose(bool mDispose)
+        {
 
-    #region Wrapper Methods
-    public double perform(double target, double time)
-    {
-        return Line_perform0(this.m_Line, target, time);
-    }
+            if (this.m_Line != IntPtr.Zero)
+            {
+                Line_free0(this.m_Line);
+                this.m_Line = IntPtr.Zero;
+            }
 
-    public void stop()
-    {
-        Line_stop0(this.m_Line);
-    }
+            if (mDispose)
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
 
-    public void set(double target, double time)
-    {
-        Line_set0(this.m_Line, target, time);
-    }
+        ~Line()
+        {
+            Dispose(false);
+        }
 
-    #endregion Wrapper Methods
+        #region Wrapper Methods
+        public double perform(double target, double time)
+        {
+            return Line_perform0(this.m_Line, target, time);
+        }
+
+        public void stop()
+        {
+            Line_stop0(this.m_Line);
+        }
+
+        public void set(double target, double time)
+        {
+            Line_set0(this.m_Line, target, time);
+        }
+
+        #endregion Wrapper Methods
+    }
 }

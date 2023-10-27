@@ -4,7 +4,10 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class Threshold : IDisposable
+namespace PdPlusPlus
+{
+
+    public class Threshold : IDisposable
 {
 
 #if UNITY_IPHONE
@@ -90,8 +93,9 @@ public class Threshold : IDisposable
         Threshold_setState0(this.m_Threshold, s);
     }
 
-   
+        #endregion Wrapper Methods
+    }
 }
 
-    #endregion Wrapper Methods
-}
+    
+

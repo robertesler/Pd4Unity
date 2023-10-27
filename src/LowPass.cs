@@ -4,8 +4,11 @@ using UnityEngine;
 using System.Runtime.InteropServices;
 using System;
 
-public class LowPass : IDisposable
+namespace PdPlusPlus
 {
+
+    public class LowPass : IDisposable
+    {
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -27,77 +30,78 @@ public class LowPass : IDisposable
     public static extern void LowPass_clear0(IntPtr ptr, double q);
 #else
 
-    [DllImport("pdplusplusUnity")]
-    public static extern IntPtr LowPass_allocate0();
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr LowPass_allocate0();
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void LowPass_free0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern void LowPass_free0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double LowPass_perform0(IntPtr ptr, double input);
+        [DllImport("pdplusplusUnity")]
+        public static extern double LowPass_perform0(IntPtr ptr, double input);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void LowPass_setCutOff0(IntPtr ptr, double f);
+        [DllImport("pdplusplusUnity")]
+        public static extern void LowPass_setCutOff0(IntPtr ptr, double f);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern double LowPass_getCutoff0(IntPtr ptr);
+        [DllImport("pdplusplusUnity")]
+        public static extern double LowPass_getCutoff0(IntPtr ptr);
 
-    [DllImport("pdplusplusUnity")]
-    public static extern void LowPass_clear0(IntPtr ptr, double q);
+        [DllImport("pdplusplusUnity")]
+        public static extern void LowPass_clear0(IntPtr ptr, double q);
 #endif
 
-    private IntPtr m_LowPass;
+        private IntPtr m_LowPass;
 
-    public LowPass()
-    {
-        this.m_LowPass = LowPass_allocate0();
-    }
-
-    public void Dispose()
-    {
-        Dispose(true);
-    }
-
-    protected virtual void Dispose(bool mDispose)
-    {
-
-        if (this.m_LowPass != IntPtr.Zero)
+        public LowPass()
         {
-            LowPass_free0(this.m_LowPass);
-            this.m_LowPass = IntPtr.Zero;
+            this.m_LowPass = LowPass_allocate0();
         }
 
-        if (mDispose)
+        public void Dispose()
         {
-            GC.SuppressFinalize(this);
+            Dispose(true);
         }
-    }
 
-    ~LowPass()
-    {
-        Dispose(false);
-    }
+        protected virtual void Dispose(bool mDispose)
+        {
 
-    #region Wrapper Methods
-    public double perform(double freq)
-    {
-        return LowPass_perform0(this.m_LowPass, freq);
-    }
+            if (this.m_LowPass != IntPtr.Zero)
+            {
+                LowPass_free0(this.m_LowPass);
+                this.m_LowPass = IntPtr.Zero;
+            }
 
-    public void setCutOff(double f)
-    {
-        LowPass_setCutOff0(this.m_LowPass, f);
-    }
+            if (mDispose)
+            {
+                GC.SuppressFinalize(this);
+            }
+        }
 
-    public double getCutOff()
-    {
-        LowPass_getCutoff0(this.m_LowPass);
-    }
+        ~LowPass()
+        {
+            Dispose(false);
+        }
 
-    public void clear(double q)
-    {
-        LowPass_clear0(this.m_LowPass, q);
-    }
+        #region Wrapper Methods
+        public double perform(double freq)
+        {
+            return LowPass_perform0(this.m_LowPass, freq);
+        }
 
-    #endregion Wrapper Methods
+        public void setCutOff(double f)
+        {
+            LowPass_setCutOff0(this.m_LowPass, f);
+        }
+
+        public double getCutOff()
+        {
+            LowPass_getCutoff0(this.m_LowPass);
+        }
+
+        public void clear(double q)
+        {
+            LowPass_clear0(this.m_LowPass, q);
+        }
+
+        #endregion Wrapper Methods
+    }
 }
