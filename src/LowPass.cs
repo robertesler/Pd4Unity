@@ -21,7 +21,7 @@ namespace PdPlusPlus
     public static extern double LowPass_perform0(IntPtr ptr, double input);
 
     [DllImport("__Internal")]
-    public static extern void LowPass_setCutOff0(IntPtr ptr, double input);
+    public static extern void LowPass_setCutoff0(IntPtr ptr, double input);
 
     [DllImport("__Internal")]
     public static extern double LowPass_getCutoff0(IntPtr ptr);
@@ -40,7 +40,7 @@ namespace PdPlusPlus
         public static extern double LowPass_perform0(IntPtr ptr, double input);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void LowPass_setCutOff0(IntPtr ptr, double f);
+        public static extern void LowPass_setCutoff0(IntPtr ptr, double f);
 
         [DllImport("pdplusplusUnity")]
         public static extern double LowPass_getCutoff0(IntPtr ptr);
@@ -89,7 +89,7 @@ namespace PdPlusPlus
 
         public void setCutOff(double f)
         {
-            LowPass_setCutOff0(this.m_LowPass, f);
+            LowPass_setCutoff0(this.m_LowPass, f);
         }
 
         public double getCutOff()
@@ -102,6 +102,6 @@ namespace PdPlusPlus
             LowPass_clear0(this.m_LowPass, q);
         }
 
-        #endregion Wrapper Methods
+    #endregion Wrapper Methods
     }
 }
