@@ -87,12 +87,12 @@ namespace PdPlusPlus
             return LowPass_perform0(this.m_LowPass, freq);
         }
 
-        public void setCutOff(double f)
+        public void setCutoff(double f)
         {
             LowPass_setCutoff0(this.m_LowPass, f);
         }
 
-        public double getCutOff()
+        public double getCutoff()
         {
             return LowPass_getCutoff0(this.m_LowPass);
         }

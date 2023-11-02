@@ -28,8 +28,8 @@ public class WindGen
 
     private VoltageControlFilter vcfBranches = new VoltageControlFilter();
     private VoltageControlFilter vcfBranches2 = new VoltageControlFilter();
-    private VoltageControlFilter.vcfOutput vcfOutput;
-    private VoltageControlFilter.vcfOutput vcfOutput2;
+    private double vcfOutput;
+    private double vcfOutput2;
 
     private Oscillator osc = new Oscillator();
     private Oscillator osc2 = new Oscillator();
@@ -153,7 +153,7 @@ public class WindGen
 
         bpDoor.setCenterFrequency(200);
         bpDoor.setQ(40);
-        lopDoor1.setCutOff(.5);
+        lopDoor1.setCutoff(.5);
         double a = lopDoor1.perform(cos.perform(((clip(ws, .35, .6) - .35) * 2) - .25));
         double b = (bpDoor.perform(n) * a) * 2;
         double c = osc.perform((a * 200) + 30);
@@ -173,7 +173,7 @@ public class WindGen
 
         bpDoor2.setCenterFrequency(100);
         bpDoor2.setQ(40);
-        lopDoor2.setCutOff(.1);
+        lopDoor2.setCutoff(.1);
         double e = lopDoor2.perform(cos.perform(((clip(ws, .25, .5) - .25) * 2) - .25));
         double f = (bpDoor.perform(n) * e) * 2;
         double g = osc2.perform((e * 100) + 20);
@@ -195,8 +195,8 @@ public class WindGen
         vcfBranches.setQ(60);
         double vd = ws;
         double cf = ((vd * 400) + 600);
-        vcfOutput = vcfBranches.perform(n, cf);
-        double a = vcfOutput.real * ((vd + .12) * (vd + .12));
+        vcfOutput = vcfBranches.perform_real(n, cf);
+        double a = vcfOutput * ((vd + .12) * (vd + .12));
         double b = a * 1.2;
         windOut = fcpan(b, .28);
 
@@ -215,8 +215,8 @@ public class WindGen
         vcfBranches2.setQ(60);
         double vd2 = ws;
         double cf2 = ((vd2 * 1000) + 1000);
-        vcfOutput2 = vcfBranches2.perform(n, cf2);
-        double c = vcfOutput2.real * (vd2 * vd2);
+        vcfOutput2 = vcfBranches2.perform_real(n, cf2);
+        double c = vcfOutput2 * (vd2 * vd2);
         double d = c * 2;
         windOut = fcpan(d, .64);
 
@@ -228,9 +228,9 @@ public class WindGen
 
         double[] windOut = new double[2];
 
-        lopLeaves1.setCutOff(.07);
-        lopLeaves2.setCutOff(4000);
-        hipTree.setCutOff(200);
+        lopLeaves1.setCutoff(.07);
+        lopLeaves2.setCutoff(4000);
+        hipTree.setCutoff(200);
         double a = lopLeaves1.perform(ws + .3);
         double b = 1 - (a * .4);
         double c = lopLeaves2.perform(hipTree.perform((max(n, b) - b) * b)) * (a - .2);

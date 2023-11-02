@@ -37,7 +37,7 @@ namespace PdPlusPlus
         public static extern double HighPass_perform0(IntPtr ptr, double input);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void HighPass_setCutOff0(IntPtr ptr, double f);
+        public static extern void HighPass_setCutoff0(IntPtr ptr, double f);
 
         [DllImport("pdplusplusUnity")]
         public static extern void HighPass_clear0(IntPtr ptr, double q);
@@ -81,9 +81,9 @@ namespace PdPlusPlus
             return HighPass_perform0(this.m_HighPass, freq);
         }
 
-        public void setCutOff(double f)
+        public void setCutoff(double f)
         {
-            HighPass_setCutOff0(this.m_HighPass, f);
+            HighPass_setCutoff0(this.m_HighPass, f);
         }
 
         public void clear(double q)

@@ -33,7 +33,7 @@ public class AudioFilters : MonoBehaviour
     private double lopFade = 0.0F;
     private double hipFade = 0.0F;
     private double vcfFade = 0.0F;
-    private VoltageControlFilter.vcfOutput vcfOutput;
+    private double vcfOutput;
     private bool running = false;
     private BandPass bp = new BandPass();
     private LowPass lop = new LowPass();
@@ -77,17 +77,17 @@ public class AudioFilters : MonoBehaviour
         bpOut = bp.perform((inputL + inputR) ) * gain * line1.perform(bpFade, time);
 
         //our low pass
-        lop.setCutOff(CenterFrequency);
+        lop.setCutoff(CenterFrequency);
         lopOut = lop.perform(inputL + inputR) * gain * line2.perform(lopFade, time);
 
         //our high pass
-        hip.setCutOff(CenterFrequency);
+        hip.setCutoff(CenterFrequency);
         hipOut = hip.perform(inputL + inputR) * gain * line3.perform(hipFade, time);
 
         //our voltage control filter
         vcf.setQ(Q);
-        vcfOutput = vcf.perform(inputL + inputR, CenterFrequency);
-        vcfOut = vcfOutput.imaginary * gain * line4.perform(vcfFade, time);
+        vcfOutput = vcf.perform_real(inputL + inputR, CenterFrequency);
+        vcfOut = vcfOutput * gain * line4.perform(vcfFade, time);
 
         //We will use our Line class to fade in or out each oscillator type
         if (BandPass)
