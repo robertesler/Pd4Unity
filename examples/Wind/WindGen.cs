@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using PdPlusPlus;
 using static WindSpeed;
 
@@ -82,7 +79,6 @@ public class WindGen
         cos2.Dispose();
 
         windspeed.Dispose();
-        Debug.Log("WindGen: Memory Deleted");
     }
 
     ~WindGen()

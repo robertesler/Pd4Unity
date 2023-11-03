@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using PdPlusPlus;
 
@@ -19,7 +17,6 @@ public class WindSpeed
         bp1.Dispose();
         noise2.Dispose();
         bp2.Dispose();
-        Debug.Log("WindSpeed: Memory Deleted");
     }
 
     ~WindSpeed()

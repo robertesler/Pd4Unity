@@ -39,6 +39,7 @@ public class AudioFilters : MonoBehaviour
     private LowPass lop = new LowPass();
     private HighPass hip = new HighPass();
     private VoltageControlFilter vcf = new VoltageControlFilter();
+    private Noise noise = new Noise();
     private Line line1 = new Line();
     private Line line2 = new Line();
     private Line line3 = new Line();
@@ -49,6 +50,7 @@ public class AudioFilters : MonoBehaviour
         double startTick = AudioSettings.dspTime;
         sampleRate = AudioSettings.outputSampleRate;
         running = true;
+        
     }
 
     ~AudioFilters()
@@ -57,6 +59,7 @@ public class AudioFilters : MonoBehaviour
         lop.Dispose();
         hip.Dispose();
         vcf.Dispose();
+        noise.Dispose();
         line1.Dispose();
         line2.Dispose();
         line3.Dispose();
