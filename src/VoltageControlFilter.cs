@@ -10,6 +10,11 @@ namespace PdPlusPlus
 
     public class VoltageControlFilter : PdMaster, IDisposable
     {
+        public struct vcfOutput
+        {
+            public double real;
+            public double imaginary;
+        };
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -19,7 +24,7 @@ namespace PdPlusPlus
     public static extern void VoltageControlFilter_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern IntPtr VoltageControlFilter_perform0(IntPtr ptr, double input, double centerFrequency);
+    public static extern VoltageControlFilter.vcfOutput VoltageControlFilter_perform0(IntPtr ptr, double input, double centerFrequency);
 
     [DllImport("__Internal")]
     public static extern double VoltageControlFilter_perform1(IntPtr ptr, double input, double centerFrequency);
@@ -41,7 +46,7 @@ namespace PdPlusPlus
     public static extern void VoltageControlFilter_free0(IntPtr ptr);
 
     [DllImport("pdplusplusUnity")]
-    public static extern IntPtr VoltageControlFilter_perform0(IntPtr ptr, double input, double centerFrequency);
+    public static extern VoltageControlFilter.vcfOutput VoltageControlFilter_perform0(IntPtr ptr, double input, double centerFrequency);
 
     [DllImport("pdplusplusUnity")]
     public static extern double VoltageControlFilter_perform1(IntPtr ptr, double input, double centerFrequency);
@@ -58,6 +63,10 @@ namespace PdPlusPlus
 #endif
 
         private IntPtr m_VoltageControlFilter;
+        
+
+        private VoltageControlFilter.vcfOutput vcf;
+        private double[] output = new double[2];
 
         public VoltageControlFilter()
         {
@@ -90,11 +99,12 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
+        //This returns both real and imaginary values in an arry.  
         public double[] perform(double input, double cf)
         {
-            IntPtr ptr = VoltageControlFilter_perform0(this.m_VoltageControlFilter, input, cf);
-            double[] output = new double[2];
-            Marshal.Copy(ptr, output, 0, output.Length);
+            vcf = VoltageControlFilter_perform0(this.m_VoltageControlFilter, input, cf);
+            output[0] = vcf.real;
+            output[1] = vcf.imaginary;
             return output;
         }
 
