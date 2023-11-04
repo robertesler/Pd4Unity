@@ -28,13 +28,16 @@ namespace PdPlusPlus
         public static extern void rIFFT_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern double rIFFT_perform0(IntPtr ptr, double[] input);
+        public static extern double rIFFT_perform0(IntPtr ptr, [In] double[] input);
 #endif
         private IntPtr m_rIFFT;
-
-        public rIFFT()
+        private int winSize = 64;
+        public rIFFT(int win)
         {
             this.m_rIFFT = rIFFT_allocate0();
+            winSize = win;
+            this.setFFTWindow(winSize);
+
         }
 
         public void Dispose()
@@ -65,7 +68,10 @@ namespace PdPlusPlus
         #region Wrapper Methods
         public double perform(double[] input)
         {
-            return rIFFT_perform0(this.m_rIFFT, input);
+            double output = 0;
+           
+            output = rIFFT_perform0(this.m_rIFFT, input);
+            return output;
         }
 
 

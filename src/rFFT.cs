@@ -18,7 +18,7 @@ namespace PdPlusPlus
     public static extern void rFFT_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern IntPtr rFFT_perform0(IntPtr ptr, double input);
+    public static extern int rFFT_perform0(IntPtr ptr, double input, [Out] double [] output);   
 #else
 
         [DllImport("pdplusplusUnity")]
@@ -28,13 +28,17 @@ namespace PdPlusPlus
         public static extern void rFFT_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr rFFT_perform0(IntPtr ptr, double input);
+        public static extern int rFFT_perform0(IntPtr ptr, double input, [Out] double [] output);
 #endif
         private IntPtr m_rFFT;
-
-        public rFFT()
+        private double[] buffer;
+        private int winSize = 64;
+        public rFFT(int win)
         {
             this.m_rFFT = rFFT_allocate0();
+            winSize = win;
+            this.setFFTWindow(winSize);
+            buffer = new double[winSize];
         }
 
         public void Dispose()
@@ -63,9 +67,11 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public IntPtr perform(double input)
+        public double[] perform(double input)
         {
-            return rFFT_perform0(this.m_rFFT, input);
+            int f = rFFT_perform0(this.m_rFFT, input, buffer);
+           // Debug.Log(buffer[0] + ", " + buffer[1] + ", " + buffer[2] + ", " + buffer[3]);
+            return buffer;
         }
 
 
