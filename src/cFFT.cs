@@ -18,7 +18,7 @@ namespace PdPlusPlus
     public static extern void cFFT_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern IntPtr cFFT_perform0(IntPtr ptr, double real, double imaginary);
+    public static extern int cFFT_perform0(IntPtr ptr, double real, double imaginary, [Out] double[] output);
 #else
 
         [DllImport("pdplusplusUnity")]
@@ -28,13 +28,17 @@ namespace PdPlusPlus
         public static extern void cFFT_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr cFFT_perform0(IntPtr ptr, double real, double imaginary);
+        public static extern int cFFT_perform0(IntPtr ptr, double real, double imaginary, [Out] double[] output);
 #endif
         private IntPtr m_cFFT;
-
-        public cFFT()
+        private double[] output;
+        private int winSize = 64;
+        public cFFT(int win)
         {
             this.m_cFFT = cFFT_allocate0();
+            winSize = win;
+            this.setFFTWindow(winSize);
+            output = new double[winSize];
         }
 
         public void Dispose()
@@ -63,11 +67,16 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public IntPtr perform(double real, double imaginary)
+        public double[] perform(double real, double imaginary)
         {
-            return cFFT_perform0(this.m_cFFT, real, imaginary);
+           int status = cFFT_perform0(this.m_cFFT, real, imaginary, output);
+            if(status == 0)
+            {
+                Debug.Log("cFFT pointer invalid.");
+            }
+            return output;
         }
-
+            
 
         #endregion Wrapper Methods
     }

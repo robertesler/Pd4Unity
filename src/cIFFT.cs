@@ -9,6 +9,10 @@ namespace PdPlusPlus
 
     public class cIFFT : PdMaster, IDisposable
     {
+        public struct complexFFTOutput {
+            public double real;
+            public double imaginary;
+         }
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
@@ -18,7 +22,7 @@ namespace PdPlusPlus
     public static extern void cIFFT_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern IntPtr cIFFT_perform0(IntPtr ptr, double* input;
+    public static extern int cIFFT_perform0(IntPtr ptr, [In] double[] input, [Out] double[]);
 #else
 
         [DllImport("pdplusplusUnity")]
@@ -28,14 +32,18 @@ namespace PdPlusPlus
         public static extern void cIFFT_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr cIFFT_perform0(IntPtr ptr, double[] input);
-        
+        public static extern  cIFFT.complexFFTOutput cIFFT_perform0(IntPtr ptr, [In] double[] input  );
+
 #endif
         private IntPtr m_cIFFT;
-
-        public cIFFT()
+        private double[] output = new double[2];
+        private int winSize = 64;
+        private cIFFT.complexFFTOutput fft;
+        public cIFFT(int win)
         {
             this.m_cIFFT = cIFFT_allocate0();
+            winSize = win;
+            this.setFFTWindow(winSize);
         }
 
         public void Dispose()
@@ -64,9 +72,13 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public IntPtr perform(double[] input)
+        public double[] perform(double[] input)
         {
-            return cIFFT_perform0(this.m_cIFFT, input);
+            fft = cIFFT_perform0(this.m_cIFFT, input);
+            output[0] = fft.real;
+            output[1] = fft.imaginary;
+
+            return output;
         }
 
 
