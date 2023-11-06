@@ -38,7 +38,7 @@ namespace PdPlusPlus
             this.m_cFFT = cFFT_allocate0();
             winSize = win;
             this.setFFTWindow(winSize);
-            output = new double[winSize];
+            output = new double[winSize*2];//complex FFT requires 2 * windowSize
         }
 
         public void Dispose()

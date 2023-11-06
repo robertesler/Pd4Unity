@@ -155,9 +155,9 @@ public class OscillatorTest : MonoBehaviour
         {
             
             int i = 0;
+            this.runAlgorithm(0, 0);
             while (i < channels)
             {
-                this.runAlgorithm(0, 0);
                 data[n * channels + i++] = (float)this.outputL;
                 data[n * channels + i++] = (float)this.outputR;
                 //i++;

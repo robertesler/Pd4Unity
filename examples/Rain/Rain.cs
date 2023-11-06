@@ -88,7 +88,7 @@ public class Rain : MonoBehaviour
             int i = 0;
             while (i < channels)
             {
-                data[n * channels + i] = (float)this.outputL;
+                data[n * channels + i++] = (float)this.outputL;
                 data[n * channels + i++] = (float)this.outputR;
             }
             n++;

@@ -91,7 +91,7 @@ public class AudioFilters : MonoBehaviour
         vcf.setQ(Q);
         vcfOutput = vcf.perform_real(inputL + inputR, CenterFrequency);
         vcfOut = vcfOutput * gain * line4.perform(vcfFade, time);
-
+        
         //We will use our Line class to fade in or out each oscillator type
         if (BandPass)
         {
