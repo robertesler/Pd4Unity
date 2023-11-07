@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System;
 
 namespace PdPlusPlus
@@ -15,22 +12,27 @@ namespace PdPlusPlus
             public double pitch;
             public double notes;
             public double envelope;
-            public double[][] peaks;
-            public double[][] tracks;
             public int peakSize;
             public int trackSize;
 
         };
+
 
 #if UNITY_IPHONE
     [DllImport("__Internal")]
     public static extern IntPtr Sigmund_allocate0();
 
     [DllImport("__Internal")]
+    public static extern IntPtr Sigmund_allocate0([In][MarshalAs(UnmanagedType.LPStr)] string peaks, [In][MarshalAs(UnmanagedType.LPStr)] string env);
+
+    [DllImport("__Internal")]
+    public static extern IntPtr Sigmund_allocate0([In][MarshalAs(UnmanagedType.LPStr)] string peaks, int num);
+
+    [DllImport("__Internal")]
     public static extern void Sigmund_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern sigmundPackage Sigmund_perform0(IntPtr ptr, double input);
+    public static extern Sigmund.sigmundPackage Sigmund_perform0(IntPtr ptr, bool peaks, double input, [Out] double[][] output);
 
     [DllImport("__Internal")]
      public static extern void Sigmund_setMode0(IntPtr ptr, int mode);
@@ -63,7 +65,7 @@ namespace PdPlusPlus
      public static extern void Sigmund_print0(IntPtr ptr);//print all parameters
 
      [DllImport("__Internal")]
-     public static extern sigmundPackage Sigmund_list0(IntPtr ptr, IntPtr array, int numOfPoints, int index, long sr, int debug);//read from an array
+     public static extern Sigmund.sigmundPackage Sigmund_list0(IntPtr ptr, bool peaks, [In] double[] array, int numOfPoints, int index, long sr, int debug, [Out] double[][] output);//read from an array
 
      [DllImport("__Internal")]
      public static extern void Sigmund_clear0(IntPtr ptr);
@@ -113,10 +115,16 @@ namespace PdPlusPlus
         public static extern IntPtr Sigmund_allocate0();
 
         [DllImport("pdplusplusUnity")]
+        public static extern IntPtr Sigmund_allocate_pitch0([In][MarshalAs(UnmanagedType.LPStr)] string peaks, [In][MarshalAs(UnmanagedType.LPStr)] string env);
+
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr Sigmund_allocate_tracks0([In][MarshalAs(UnmanagedType.LPStr)] string peaks, int num);
+
+        [DllImport("pdplusplusUnity")]
         public static extern void Sigmund_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern sigmundPackage Sigmund_perform0(IntPtr ptr, double input);
+        public static extern Sigmund.sigmundPackage Sigmund_perform0(IntPtr ptr, bool peaks, double input, [Out] double[][] output);
 
         [DllImport("pdplusplusUnity")]
         public static extern void Sigmund_setMode0(IntPtr ptr, int mode);
@@ -149,7 +157,7 @@ namespace PdPlusPlus
         public static extern void Sigmund_print0(IntPtr ptr);//print all parameters
 
         [DllImport("pdplusplusUnity")]
-        public static extern sigmundPackage Sigmund_list0(IntPtr ptr, IntPtr array, int numOfPoints, int index, long sr, int debug);//read from an array
+        public static extern Sigmund.sigmundPackage Sigmund_list0(IntPtr ptr, bool peaks, [In] double[] array, int numOfPoints, int index, long sr, int debug, [Out] double[][] output);//read from an array
 
         [DllImport("pdplusplusUnity")]
         public static extern void Sigmund_clear0(IntPtr ptr);
@@ -196,10 +204,38 @@ namespace PdPlusPlus
 #endif
 
         private IntPtr m_Sigmund;
+        private bool peaks;
+        private int numOfPeaks;
+        private int numOfTracks;
+        private double[][] buffer;
+        public double pitch {get; set;}
+        public double envelope {get; set;}
+        public double notes { get; set; }
+        public int peakSize { get; set; }
+        public int trackSize { get; set; }
+        public double[][] output { get; set; }
 
         public Sigmund()
         {
             this.m_Sigmund = Sigmund_allocate0();
+            peaks = false;
+            buffer = new double[1][];
+        }
+
+        //choose either "pitch" or "notes", and "env" or "envelope"
+        public Sigmund(string pitch, string env)
+        {
+            this.m_Sigmund = Sigmund_allocate_pitch0(pitch, env);
+            peaks = false;
+            buffer = new double[1][];
+        }
+
+        //choose either "peaks" or "tracks"
+        public Sigmund(string tracks, int num)
+        {
+            this.m_Sigmund = Sigmund_allocate_tracks0(tracks, num);
+            peaks = true;
+            buffer = new double[num][];//peaks are 5 columns, tracks are 4 
         }
 
         public void Dispose()
@@ -228,9 +264,18 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public sigmundPackage perform(double input)
+        public void perform(double input)
         {
-            return Sigmund_perform0(this.m_Sigmund, input);
+            Sigmund.sigmundPackage aPack;
+
+            aPack = Sigmund_perform0(this.m_Sigmund, peaks, input, buffer);
+            envelope = aPack.envelope;
+            notes = aPack.notes;
+            pitch = aPack.pitch;
+            peakSize = aPack.peakSize;
+            trackSize = aPack.trackSize;
+            output = buffer;
+
         }
 
         public void setMode(int mode)
@@ -283,9 +328,19 @@ namespace PdPlusPlus
             Sigmund_print0(this.m_Sigmund);//print all parameters
         }
 
-        public sigmundPackage list(IntPtr array, int numOfPoints, int index, long sr, int debug)
+        public void list(double[] array, int numOfPoints, int index, long sr, int debug)
         {
-            return Sigmund_list0(this.m_Sigmund, array, numOfPoints, index, sr, debug);//read from an array
+            sigmundPackage aPack;
+           
+            aPack = Sigmund_list0(this.m_Sigmund, peaks, array, numOfPoints, index, sr, debug, buffer);
+
+             envelope = aPack.envelope;
+             notes = aPack.notes;
+             pitch = aPack.pitch;
+             peakSize = aPack.peakSize;
+             trackSize = aPack.trackSize;
+             output = buffer;
+
         }
 
         public void clear()
