@@ -32,7 +32,7 @@ namespace PdPlusPlus
     public static extern void Sigmund_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern Sigmund.sigmundPackage Sigmund_perform0(IntPtr ptr, bool peaks, double input, [Out] double[][] output);
+    public static extern Sigmund.sigmundPackage Sigmund_perform0(IntPtr ptr, bool peaks, double input, [Out] double[,] output);
 
     [DllImport("__Internal")]
      public static extern void Sigmund_setMode0(IntPtr ptr, int mode);
@@ -65,7 +65,7 @@ namespace PdPlusPlus
      public static extern void Sigmund_print0(IntPtr ptr);//print all parameters
 
      [DllImport("__Internal")]
-     public static extern Sigmund.sigmundPackage Sigmund_list0(IntPtr ptr, bool peaks, [In] double[] array, int numOfPoints, int index, long sr, int debug, [Out] double[][] output);//read from an array
+     public static extern Sigmund.sigmundPackage Sigmund_list0(IntPtr ptr, bool peaks, [In] double[] array, int numOfPoints, int index, long sr, int debug, [Out] double[,] output);//read from an array
 
      [DllImport("__Internal")]
      public static extern void Sigmund_clear0(IntPtr ptr);
@@ -124,7 +124,7 @@ namespace PdPlusPlus
         public static extern void Sigmund_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern Sigmund.sigmundPackage Sigmund_perform0(IntPtr ptr, bool peaks, double input, [Out] double[][] output);
+        public static extern Sigmund.sigmundPackage Sigmund_perform0(IntPtr ptr, bool peaks, double input, [Out] double[,] output);
 
         [DllImport("pdplusplusUnity")]
         public static extern void Sigmund_setMode0(IntPtr ptr, int mode);
@@ -157,7 +157,7 @@ namespace PdPlusPlus
         public static extern void Sigmund_print0(IntPtr ptr);//print all parameters
 
         [DllImport("pdplusplusUnity")]
-        public static extern Sigmund.sigmundPackage Sigmund_list0(IntPtr ptr, bool peaks, [In] double[] array, int numOfPoints, int index, long sr, int debug, [Out] double[][] output);//read from an array
+        public static extern Sigmund.sigmundPackage Sigmund_list0(IntPtr ptr, bool peaks, [In] double[] array, int numOfPoints, int index, long sr, int debug, [Out] double[,] output);//read from an array
 
         [DllImport("pdplusplusUnity")]
         public static extern void Sigmund_clear0(IntPtr ptr);
@@ -207,19 +207,20 @@ namespace PdPlusPlus
         private bool peaks;
         private int numOfPeaks;
         private int numOfTracks;
-        private double[][] buffer;
+        private double[,] buffer;
         public double pitch {get; set;}
         public double envelope {get; set;}
         public double notes { get; set; }
         public int peakSize { get; set; }
         public int trackSize { get; set; }
-        public double[][] output { get; set; }
+        public double[,] output { get; set; }
 
         public Sigmund()
         {
             this.m_Sigmund = Sigmund_allocate0();
             peaks = false;
-            buffer = new double[1][];
+            buffer = new double[1,1];
+           
         }
 
         //choose either "pitch" or "notes", and "env" or "envelope"
@@ -227,7 +228,7 @@ namespace PdPlusPlus
         {
             this.m_Sigmund = Sigmund_allocate_pitch0(pitch, env);
             peaks = false;
-            buffer = new double[1][];
+            buffer = new double[1,1];
         }
 
         //choose either "peaks" or "tracks"
@@ -235,7 +236,7 @@ namespace PdPlusPlus
         {
             this.m_Sigmund = Sigmund_allocate_tracks0(tracks, num);
             peaks = true;
-            buffer = new double[num][];//peaks are 5 columns, tracks are 4 
+            buffer = new double[num,5];//peaks are 5 columns, tracks are 4  
         }
 
         public void Dispose()

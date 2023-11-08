@@ -24,12 +24,14 @@ public class SigmundDemo : MonoBehaviour
     ~SigmundDemo()
     {
         sigmund.Dispose();
+        osc.Dispose();
     }
 
     //This is your DSP chain, run everything audio from here
     public void runAlgorithm(double inputL, double inputR)
     {
-        sigmund.perform(osc.perform(frequency));
+        double x = osc.perform(frequency);
+        sigmund.perform(x);
         double p = sigmund.pitch;
         double e = sigmund.envelope;
         Debug.Log(p + " | " + e);
