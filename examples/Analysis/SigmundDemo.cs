@@ -11,12 +11,14 @@ public class SigmundDemo : MonoBehaviour
     private double outputL = 0.0F;
     private double outputR = 0.0F;
     private int sr;
-    private Sigmund sigmund = new Sigmund();//defaults to pitch and env
+    private Sigmund sigmund;//defaults to pitch and env
+    private int peaks = 10;
     private Oscillator osc = new Oscillator();
 
     // Start is called before the first frame update
     void Start()
     {
+        sigmund = new Sigmund("peaks", peaks);
         sr = AudioSettings.outputSampleRate;
         running = true;
     }
@@ -32,9 +34,18 @@ public class SigmundDemo : MonoBehaviour
     {
         double x = osc.perform(frequency);
         sigmund.perform(x);
-        double p = sigmund.pitch;
-        double e = sigmund.envelope;
-        Debug.Log(p + " | " + e);
+        //double p = sigmund.pitch;
+        //double e = sigmund.envelope;
+        
+        double[] peakArray = new double[peaks * 5]; //peaks gives 5 numbers
+        peakArray = sigmund.output;
+
+        for(int i = 0; i < peakArray.Length; i++)
+        {
+            
+                Debug.Log(peakArray[i]);
+        }
+       
         outputL = 0;
         outputR = 0;
     }
