@@ -22,10 +22,12 @@ public class AudioFilters : MonoBehaviour
     public double CenterFrequency = 500.0F;
     public double Q = 2.0F;
     public float gain = 0.2F;
+    public float BobRes = 1.0F;
     public bool BandPass = false;
     public bool LowPass = false;
     public bool HighPass = false;
     public bool VCF = false;
+    public bool Bob = false;
     private double outputL = 0.0F;
     private double outputR = 0.0F;
     private double sampleRate = 0.0F;
@@ -33,17 +35,20 @@ public class AudioFilters : MonoBehaviour
     private double lopFade = 0.0F;
     private double hipFade = 0.0F;
     private double vcfFade = 0.0F;
+    private double bobFade = 0.0F;
     private double vcfOutput;
     private bool running = false;
     private BandPass bp = new BandPass();
     private LowPass lop = new LowPass();
     private HighPass hip = new HighPass();
     private VoltageControlFilter vcf = new VoltageControlFilter();
+    private BobFilter bob = new BobFilter();
     private Noise noise = new Noise();
     private Line line1 = new Line();
     private Line line2 = new Line();
     private Line line3 = new Line();
     private Line line4 = new Line();
+    private Line line5 = new Line();
 
     void Start()
     {
@@ -59,11 +64,13 @@ public class AudioFilters : MonoBehaviour
         lop.Dispose();
         hip.Dispose();
         vcf.Dispose();
+        bob.Dispose();
         noise.Dispose();
         line1.Dispose();
         line2.Dispose();
         line3.Dispose();
         line4.Dispose();
+        line5.Dispose();
     }
 
     public void runAlgorithm(double inputL, double inputR)
@@ -73,6 +80,7 @@ public class AudioFilters : MonoBehaviour
         double lopOut = 0;
         double hipOut = 0;
         double vcfOut = 0;
+        double bobOut = 0;
         double time = 200;
         //our bandpass
         bp.setCenterFrequency(CenterFrequency);
@@ -91,6 +99,10 @@ public class AudioFilters : MonoBehaviour
         vcf.setQ(Q);
         vcfOutput = vcf.perform_real(inputL + inputR, CenterFrequency);
         vcfOut = vcfOutput * gain * line4.perform(vcfFade, time);
+
+        bob.setCutoffFrequency(CenterFrequency);
+        bob.setResonance(BobRes);
+        bobOut = bob.perform(inputL + inputR) * gain * line5.perform(bobFade, time);
         
         //We will use our Line class to fade in or out each oscillator type
         if (BandPass)
@@ -129,7 +141,16 @@ public class AudioFilters : MonoBehaviour
             vcfFade = 0;
         }
 
-        outputL = outputR = bpOut + lopOut + hipOut + vcfOut;
+        if(Bob)
+        {
+            bobFade = 1;
+        }
+        else
+        {
+            bobFade = 0;
+        }
+
+        outputL = outputR = bpOut + lopOut + hipOut + vcfOut + bobOut;
     }
 
     void OnAudioFilterRead(float[] data, int channels)
@@ -143,11 +164,10 @@ public class AudioFilters : MonoBehaviour
         {
             
             int i = 0;
+            float in1 = data[n * channels + i];
+            this.runAlgorithm(in1, in1);
             while (i < channels)
             {
-                float in1 = data[n * channels + i];
-              
-                this.runAlgorithm(in1, in1);
                 data[n * channels + i] = (float)this.outputL;
                 data[n * channels + i++] = (float)this.outputR;
             }

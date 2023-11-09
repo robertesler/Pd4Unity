@@ -122,7 +122,7 @@ namespace PdPlusPlus
             return BobFilter_perform0(this.m_BobFilter, freq);
         }
 
-        public void setCuttoffFrequency(double cf)
+        public void setCutoffFrequency(double cf)
         {
             BobFilter_setCutoffFrequency0(this.m_BobFilter, cf);
         }
