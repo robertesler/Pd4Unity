@@ -238,7 +238,15 @@ namespace PdPlusPlus
         {
             this.m_Sigmund = Sigmund_allocate_tracks0(tracks, num);
             peaks = true;
-            buffer = new double[num * 5];//peaks are 5 columns, tracks are 4
+            bool comp = tracks.Equals("peaks");
+            if(comp)
+            {
+                buffer = new double[num * 5];//peaks are 5 columns, tracks are 4
+            }
+            else
+            {
+                buffer = new double[num * 4];//peaks are 5 columns, tracks are 4
+            }
            
         }
 

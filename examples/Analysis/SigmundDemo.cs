@@ -34,18 +34,36 @@ public class SigmundDemo : MonoBehaviour
     {
         double x = osc.perform(frequency);
         sigmund.perform(x);
+        /*
+         This is for pitch/note, and envelope mode.  Pitch mode is better than notes.
+         Sigmund will return the fundamental pitch (MIDI note) and amplitude (dB)
+         There are numerous other parameters you can set to fine tune the detection of
+         Sigmund.  See the pd [sigmund~] help patch for more on that.
+         */
         //double p = sigmund.pitch;
         //double e = sigmund.envelope;
         
         double[] peakArray = new double[peaks * 5]; //peaks gives 5 numbers
         peakArray = sigmund.output;
 
-        for(int i = 0; i < peakArray.Length; i++)
+        /*
+         * Sigmund in peak or track mode prints out an array of numbers.
+         * This array is size = peaks * 5 or size = tracks * 4
+         * Below is an example of peaks: 
+         * The first number is the Index or partial number in order of strongest to weakest.
+         * Then each number after that is: 
+         * Frequency | Peak Amplitude (linear) | cos component | sine component
+         * 
+         * For tracks:
+         * First number is Index | Frequency | Peak Amplitude (linear) | flag (-1, 0, 1) empty,continution,new
+         * See the pd [sigmund~] help-patch if you want to learn more about this powerful object.
+         * */
+        for(int i = 0; i < peaks; i++)
         {
-            
-                Debug.Log(peakArray[i]);
+            for (int j = 0; j < 5; j++)
+                Debug.Log(peakArray[i * 5 + j]);
         }
-       
+
         outputL = 0;
         outputR = 0;
     }
