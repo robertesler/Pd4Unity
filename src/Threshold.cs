@@ -24,7 +24,7 @@ namespace PdPlusPlus
     public static extern void Threshold_setValues0(IntPtr ptr, double ht, double hd, double lt, double ld);
 
     [DllImport("__Internal")]
-    public static extern void sThreshold_etState0(IntPtr ptr, int s);
+    public static extern void sThreshold_setState0(IntPtr ptr, int s);
 
 #else
 
@@ -83,7 +83,7 @@ namespace PdPlusPlus
         return Threshold_perform0(this.m_Threshold, input);
     }
 
-    public void setValues(IntPtr ptr, double ht, double hd, double lt, double ld)
+    public void setValues(double ht, double hd, double lt, double ld)
     {
         Threshold_setValues0(this.m_Threshold, ht, hd, lt, ld);
     }

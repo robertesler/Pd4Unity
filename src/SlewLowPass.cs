@@ -72,7 +72,7 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public double perform(IntPtr ptr, double input, double freq, double posLimitIn, double posFreqIn, double negLimitIn, double negFreqIn)
+        public double perform(double input, double freq, double posLimitIn, double posFreqIn, double negLimitIn, double negFreqIn)
         {
             return SlewLowPass_perform0(this.m_SlewLowPass, input, freq, posLimitIn, posFreqIn, negLimitIn, negFreqIn);
         }

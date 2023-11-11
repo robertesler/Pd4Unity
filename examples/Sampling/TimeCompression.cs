@@ -40,13 +40,12 @@ public class TimeCompression : MonoBehaviour
     void Start()
     {
         string tempFile = AssetDatabase.GetAssetPath(audioFile);//our file's path
-        fileSize = (int)soundfiler.read("D:\\Documents\\TestPd4Unity\\Assets\\Audio\\voice.wav");
+        fileSize = (int)soundfiler.read(tempFile);
        
         loop = new double[fileSize + 4];
         loop = soundfiler.getArray(fileSize);
         tabread1.setTable(loop, fileSize);
         tabread2.setTable(loop, fileSize);
-        sr = AudioSettings.outputSampleRate;
         tabread1.setSampleRate(sr);
         tabread2.setSampleRate(sr);
         running = true;
@@ -129,7 +128,7 @@ public class TimeCompression : MonoBehaviour
 
     private void setChunkSize(float cs)
     {
-        chunkSize = cs / 1000;//msec
+        chunkSize = cs / 1000.0F;//msec
     }
 
     private float getChunkSize()
@@ -139,7 +138,7 @@ public class TimeCompression : MonoBehaviour
 
     private void setPrecession(float p)
     {
-        precession = p / 100;//in %
+        precession = p / 100.0F;//in %
     }
 
     private float getPrecession()
@@ -149,7 +148,7 @@ public class TimeCompression : MonoBehaviour
     //(2^t/120 - p)/c
     private void setTransposition(float f1)
     {
-        transposition = (float)Math.Pow(2, f1 / 120) - getPrecession() / getChunkSize();
+        transposition = ( (float)Math.Pow(2, f1 / 120.0F) - getPrecession() ) / getChunkSize();
 
     }
 
@@ -160,7 +159,7 @@ public class TimeCompression : MonoBehaviour
 
     private void setLoopLength(float l)
     {
-        loopLength = l / 1000;//msec 
+        loopLength = l / 1000.0F;//msec 
     }
 
     private float getLoopLength()
