@@ -21,7 +21,7 @@ namespace PdPlusPlus
     public static extern double TabRead4_perform0(IntPtr ptr, double index);
 
     [DllImport("__Internal")]
-    public static extern void TabRead4_setTable0(IntPtr ptr, IntPtr table, long size);
+    public static extern void TabRead4_setTable0(IntPtr ptr, [In] double[] table, long size);
 
     [DllImport("__Internal")]
     public static extern int TabRead4_getTableSize0(IntPtr ptr);
@@ -44,7 +44,7 @@ namespace PdPlusPlus
         public static extern double TabRead4_perform0(IntPtr ptr, double index);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void TabRead4_setTable0(IntPtr ptr, IntPtr table, long size);
+        public static extern void TabRead4_setTable0(IntPtr ptr, [In] double[] table, long size);
 
         [DllImport("pdplusplusUnity")]
         public static extern int TabRead4_getTableSize0(IntPtr ptr);
@@ -95,7 +95,7 @@ namespace PdPlusPlus
             return TabRead4_perform0(this.m_TabRead4, index);
         }
 
-        public void setTable(IntPtr table, long size)
+        public void setTable(double[] table, long size)
         {
             TabRead4_setTable0(this.m_TabRead4, table, size);
         }

@@ -18,10 +18,10 @@ namespace PdPlusPlus
     public static extern void SoundFiler_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern double SoundFiler_read0(IntPtr ptr, string file);
+    public static extern double SoundFiler_read0(IntPtr ptr,  [In][MarshalAs(UnmanagedType.LPStr)] string file);
 
     [DllImport("__Internal")]
-    public static extern void SoundFiler_write0(IntPtr ptr, string fileName,
+    public static extern void SoundFiler_write0(IntPtr ptr,  [In][MarshalAs(UnmanagedType.LPStr)] string fileName,
            int nChannels,
            long type,
            long format,
@@ -29,7 +29,7 @@ namespace PdPlusPlus
            long count);
 
     [DllImport("__Internal")]
-    public static extern IntPtr SoundFiler_getArray0(IntPtr);
+    public static extern void SoundFiler_getArray0(IntPtr ptr, int size, [Out] double[] output);
 
 
 #else
@@ -41,10 +41,10 @@ namespace PdPlusPlus
         public static extern void SoundFiler_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern double SoundFiler_read0(IntPtr ptr, string file);
+        public static extern double SoundFiler_read0(IntPtr ptr, [In][MarshalAs(UnmanagedType.LPStr)] string file);
 
         [DllImport("pdplusplusUnity")]
-        public static extern void SoundFiler_write0(IntPtr ptr, string fileName,
+        public static extern void SoundFiler_write0(IntPtr ptr, [In][MarshalAs(UnmanagedType.LPStr)] string fileName,
                int nChannels,
                long type,
                long format,
@@ -52,7 +52,7 @@ namespace PdPlusPlus
                long count);
 
         [DllImport("pdplusplusUnity")]
-        public static extern IntPtr SoundFiler_getArray0(IntPtr ptr);
+        public static extern void SoundFiler_getArray0(IntPtr ptr, int size, [Out] double[] output);
 
 #endif
 
@@ -109,10 +109,13 @@ namespace PdPlusPlus
                count);
         }
 
-
-        public IntPtr getArray()
+        //don't run this in the audio loop (e.g. OnAudioFilterRead() ), it will probably crash, run in Start()
+        public double[] getArray(int size)
         {
-            return SoundFiler_getArray0(this.m_SoundFiler);
+           double [] output = new double[size];
+           SoundFiler_getArray0(this.m_SoundFiler, size, output);
+           
+            return output;
         }
 
         #endregion Wrapper Methods
