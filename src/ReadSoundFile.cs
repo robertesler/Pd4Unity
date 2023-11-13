@@ -18,10 +18,10 @@ namespace PdPlusPlus
     public static extern void ReadSoundFile_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern void ReadSoundFile_open0(IntPtr ptr, char[] file, double onset);
+    public static extern void ReadSoundFile_open0(IntPtr ptr, [In][MarshalAs(UnmanagedType.LPStr)] string file, double onset);
 
     [DllImport("__Internal")]
-     public static extern IntPtr ReadSoundFile_start0(IntPtr ptr);
+     public static extern bool ReadSoundFile_start0(IntPtr ptr, [Out] double[] output);
 
     [DllImport("__Internal")]
     public static extern void ReadSoundFile_stop0(IntPtr ptr);
@@ -47,10 +47,10 @@ namespace PdPlusPlus
     public static extern void ReadSoundFile_free0(IntPtr ptr);
 
     [DllImport("pdplusplusUnity")]
-    public static extern void ReadSoundFile_open0(IntPtr ptr, char[] file, double onset);
+    public static extern void ReadSoundFile_open0(IntPtr ptr, [In][MarshalAs(UnmanagedType.LPStr)] string file, double onset);
 
     [DllImport("pdplusplusUnity")]
-    public static extern IntPtr ReadSoundFile_start0(IntPtr ptr);
+    public static extern bool ReadSoundFile_start0(IntPtr ptr, [Out] double[] output);
 
     [DllImport("pdplusplusUnity")]
     public static extern void ReadSoundFile_stop0(IntPtr ptr);
@@ -65,15 +65,21 @@ namespace PdPlusPlus
     public static extern int ReadSoundFile_getBufferSize0(IntPtr ptr);
 
     [DllImport("pdplusplusUnity")]
+     public static extern int ReadSoundFile_getChannels0(IntPtr ptr);
+
+    [DllImport("pdplusplusUnity")]
     public static extern bool ReadSoundFile_isComplete0(IntPtr ptr);
 
 #endif
 
         private IntPtr m_ReadSoundFile;
+        private double[] output;
+        private int buffer = 1024;
 
         public ReadSoundFile()
         {
             this.m_ReadSoundFile = ReadSoundFile_allocate0();
+            output = new double[buffer];
         }
 
         public void Dispose()
@@ -102,16 +108,18 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-
+        //call open() before start()
         public void open(string file, double onset)
         {
-            char[] f = file.ToCharArray();
-            ReadSoundFile_open0(this.m_ReadSoundFile, f, onset);
+            ReadSoundFile_open0(this.m_ReadSoundFile, file, onset);
+            buffer = getBufferSize();
+            output = new double[buffer];
         }
 
-        public IntPtr start()
+        public bool start()
         {
-            return ReadSoundFile_start0(this.m_ReadSoundFile);
+          
+            return ReadSoundFile_start0(this.m_ReadSoundFile, output); 
         }
 
         public void stop()
@@ -132,6 +140,11 @@ namespace PdPlusPlus
         public int getBufferSize()
         {
             return ReadSoundFile_getBufferSize0(this.m_ReadSoundFile);
+        }
+
+        public int getChannels()
+        {
+            return ReadSoundFile_getChannels0(this.m_ReadSoundFile);
         }
 
         public bool isComplete()
