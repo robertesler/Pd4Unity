@@ -4,26 +4,33 @@ using UnityEngine;
 using UnityEditor;
 using PdPlusPlus;
 
+/*
+ This example streams an audio file from disk.  It essentially
+does the same thing as Audio Source and/or Audio Clip.  So I only
+recommend using it if those cannot do what you need.
+See the note in ReadSoundFile.cs about performance issues.
+
+I instead recommend using SoundFiler to load audio files into
+RAM.  
+ */
+
 public class ReadAudioFile : MonoBehaviour
 {
     public AudioClip audioFile;
     public bool start = false;
     private ReadSoundFile readsf = new ReadSoundFile();
     private bool running = false;
-    private int ch = 2;
+    private int channels = 1;
     private double outputL = 0.0F;
     private double outputR = 0.0F;
 
-    // Start is called before the first frame update
+    // Call open() before calling start.  
     void Start()
     {
         string tempFile = AssetDatabase.GetAssetPath(audioFile);
-        readsf.setBufferSize(10); 
+        readsf.setBufferSize(10);
         readsf.open(tempFile , 0);
-        
         running = true;
-        
-        
     }
 
     ~ReadAudioFile()
@@ -31,17 +38,24 @@ public class ReadAudioFile : MonoBehaviour
         readsf.Dispose();
     }
 
+   
     public void runAlgorithm(double inputL, double inputR)
     {
-        
-        if(start)
+        //This is where we stream the data from disk.  
+        if(start && !readsf.isComplete())
         {
-            bool t;
-            t = readsf.start();
-            Debug.Log(t);
+                double[] output;
+                output = readsf.start();
+                outputL = outputR = output[0];
+            
         }  
         else
         {
+            if(readsf.isComplete())
+            {
+                start = false;
+                readsf.stop();
+            }
             outputL = outputR = 0;
         }
        
