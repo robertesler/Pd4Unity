@@ -12,6 +12,7 @@ public class TimeCompression : MonoBehaviour
     public float Precession = 60.0F;
     public float LoopLength = 900.0F;
     public AudioClip audioFile;
+
     private bool running = false;
     private double outputL = 0.0F;
     private double outputR = 0.0F;
@@ -24,7 +25,6 @@ public class TimeCompression : MonoBehaviour
     private Phasor phasor1 = new Phasor();
     private Phasor phasor2 = new Phasor();
     private HighPass hip = new HighPass();
-    private SoundFiler soundfiler = new SoundFiler();
     private float transposition = -20;
     private float chunkSize = 25;
     private float precession = 60;
@@ -35,15 +35,17 @@ public class TimeCompression : MonoBehaviour
     private float phase1 = 0;
     private float phase2 = 0;
     private long sr = 44100;
-    private long counter = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        string tempFile = AssetDatabase.GetAssetPath(audioFile);//our file's path
-        fileSize = (int)soundfiler.read(tempFile);
-       
+        //We copy our Audio Clip data to TabRead4
+        fileSize = audioFile.samples * audioFile.channels;
         loop = new double[fileSize + 4];
-        loop = soundfiler.getArray(fileSize);
+        float [] fLoop = new float[fileSize + 4];//our Audio Clip copy, b/c Unity deals with floats only
+        audioFile.GetData(fLoop, 0);
+        
+        for (int i = 0; i < fileSize; i++) loop[i] = (double)fLoop[i];
         tabread1.setTable(loop, fileSize);
         tabread2.setTable(loop, fileSize);
         tabread1.setSampleRate(sr);
@@ -92,7 +94,6 @@ public class TimeCompression : MonoBehaviour
         phasor1.Dispose();
         phasor2.Dispose();
         hip.Dispose();
-        soundfiler.Dispose();
     }
 
 

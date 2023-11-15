@@ -18,7 +18,7 @@ namespace PdPlusPlus
     public static extern void Metro_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern double Metro_perform0(IntPtr ptr, double time);
+    public static extern bool Metro_perform0(IntPtr ptr, double time);
 
     [DllImport("__Internal")]
     public static extern void Metro_setBPM0(IntPtr ptr, bool b);
@@ -35,7 +35,7 @@ namespace PdPlusPlus
         public static extern void Metro_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern double Metro_perform0(IntPtr ptr, double time);
+        public static extern bool Metro_perform0(IntPtr ptr, double time);
 
         [DllImport("pdplusplusUnity")]
         public static extern void Metro_setBPM0(IntPtr ptr, bool b);
@@ -78,7 +78,7 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public double perform(double input)
+        public bool perform(double input)
         {
             return Metro_perform0(this.m_Metro, input);
         }
