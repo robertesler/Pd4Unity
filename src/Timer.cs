@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System;
 
 
@@ -95,7 +92,7 @@ namespace PdPlusPlus
             Timer_start0(this.m_Timer);
         }
 
-        public void StringSplitOptions()
+        public void stop()
         {
             Timer_stop0(this.m_Timer);
         }

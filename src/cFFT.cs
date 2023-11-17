@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using System;
 
 namespace PdPlusPlus
@@ -72,7 +69,7 @@ namespace PdPlusPlus
            int status = cFFT_perform0(this.m_cFFT, real, imaginary, output);
             if(status == 0)
             {
-                Debug.Log("cFFT pointer invalid.");
+                Console.Write("cFFT pointer invalid.");
             }
             return output;
         }

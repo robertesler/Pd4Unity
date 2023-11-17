@@ -56,7 +56,6 @@ public class AudioFilters : MonoBehaviour
 
     void Start()
     {
-        double startTick = AudioSettings.dspTime;
         sampleRate = AudioSettings.outputSampleRate;
         running = true;
       
