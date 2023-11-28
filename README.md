@@ -16,7 +16,7 @@ More to come...
 # Pd++
 Pd++ is a standalone C++ library based on the signal objects of Pure Data. The dynamic library used for this distribution is based on that.  You can compile it directly for your architecture if you want more advanced usage. More information can be found here: https://bitbucket.org/resler/pd/src/master/
 
-# Pure Data to Pd4P3 object table
+# Pure Data to Pd4Unity object table
 These are the Pd objects emulated in Pd4Unity.
 | Class    |   Pd Object |
  --------- | ------------ 
