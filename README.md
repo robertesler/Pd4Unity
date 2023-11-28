@@ -52,13 +52,15 @@ cFFT     |   [fft~]
 cIFFT    |   [ifft~]
 rFFT      |  [rfft~]
 rIFFT     |  [rifft~]
-PdMaster, which is the superclass to all Pd4P3 classes, also has a few utility methods
+PdMaster, which is the superclass to all PdPlusPlus classes, also has a few utility methods
 dbtorms() |  [dbtorms]
 rmstodb() |  [rmstodb]
 mtof()    |  [mtof]
 ftom()    |  [ftom]
 powtodb() |  [powtodb]
 dbtopow() | [dbtopow]
+
+* ReadSoundFile and WriteSoundFile are experimental.  I recommend using Unity's built-in AudioClip API if trying to use audio files.
 
 # Limitations
 So far with my testing it appears when the Unity function ```OnAudioFilterRead(float [] data, int channels)``` is used to pass our audio buffer it is subject to the C# Garbage Collector.  This means there may be dropouts.  When used in the Editor the dropouts can be noticeable to very noticeable.  When used within a built game, it appears these dropouts are minimized quite a bit.  This library is not meant to be a high-performance audio engine like FMOD or Wwise, but instead show people how to create procedural audio routines without having to do a lot of heavy lifting for the user.  
