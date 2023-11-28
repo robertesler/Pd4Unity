@@ -6,7 +6,12 @@ namespace PdPlusPlus
 
     public class ComplexZero : PdMaster, IDisposable
     {
+        public struct complexOutput
+        {
+            public double real;
+            public double imag;
 
+        }
 #if UNITY_IPHONE
     [DllImport("__Internal")]
     public static extern IntPtr ComplexZero_allocate0();
@@ -15,7 +20,7 @@ namespace PdPlusPlus
     public static extern void ComplexZero_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
-    public static extern double ComplexZero_perform0(IntPtr ptr, double in, double imag, double rcoef, double icoef);
+    public static extern complexOutput ComplexZero_perform0(IntPtr ptr, double in, double imag, double rcoef, double icoef);
 
     [DllImport("__Internal")]
     public static extern void ComplexZero_set0(IntPtr ptr, double Complex, double imaginary);
@@ -31,7 +36,7 @@ namespace PdPlusPlus
         public static extern void ComplexZero_free0(IntPtr ptr);
 
         [DllImport("pdplusplusUnity")]
-        public static extern double ComplexZero_perform0(IntPtr ptr, double input, double imag, double rcoef, double icoef);
+        public static extern complexOutput ComplexZero_perform0(IntPtr ptr, double input, double imag, double rcoef, double icoef);
 
         [DllImport("pdplusplusUnity")]
         public static extern void ComplexZero_set0(IntPtr ptr, double Complex, double imaginary);
@@ -74,9 +79,14 @@ namespace PdPlusPlus
         }
 
         #region Wrapper Methods
-        public double perform(double input, double imag, double rcoef, double icoef)
+        public double [] perform(double input, double imag, double rcoef, double icoef)
         {
-            return ComplexZero_perform0(this.m_ComplexZero, input, imag, rcoef, icoef); ;
+        
+            complexOutput co = ComplexZero_perform0(this.m_ComplexZero, input, imag, rcoef, icoef);
+            double[] output = new double[2];
+            output[0] = co.real;
+            output[1] = co.imag;
+            return output;
         }
 
         public void set(double c, double i)
