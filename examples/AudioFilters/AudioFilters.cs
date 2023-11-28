@@ -1,4 +1,5 @@
 using UnityEngine;
+using static ResonantFilter;
 using PdPlusPlus;
 
 /*
@@ -48,7 +49,7 @@ public class AudioFilters : MonoBehaviour
     private VoltageControlFilter vcf = new VoltageControlFilter();
     private BobFilter bob = new BobFilter();
     private SlewLowPass slop = new SlewLowPass();
-    private ResonantFilter res = new ResonantFilter();
+    private ResonantFilter res;
     private Noise noise = new Noise();
     private Line line1 = new Line();
     private Line line2 = new Line();
@@ -61,8 +62,8 @@ public class AudioFilters : MonoBehaviour
     void Start()
     {
         sampleRate = AudioSettings.outputSampleRate;
+        res = new ResonantFilter((int)sampleRate);
         running = true;
-      
     }
 
     ~AudioFilters()
@@ -95,6 +96,7 @@ public class AudioFilters : MonoBehaviour
         double slopOut = 0;
         double resOut = 0;
         double time = 200;
+
         //our bandpass
         bp.setCenterFrequency(CenterFrequency);
         bp.setQ(Q);
@@ -113,15 +115,20 @@ public class AudioFilters : MonoBehaviour
         vcfOutput = vcf.perform_real(inputL + inputR, CenterFrequency);
         vcfOut = vcfOutput * gain * line4.perform(vcfFade, time);
 
+        //our Bob Moog filter
         bob.setCutoffFrequency(CenterFrequency);
         bob.setResonance(BobRes);
         bobOut = bob.perform(inputL + inputR) * gain * line5.perform(bobFade, time);
 
+        //our slew low pass
         slopOut = slop.perform(inputL + inputR, CenterFrequency, .2, 27, .36, 0) * gain * line6.perform(slopFade, time);
 
-        resOut = res.perform(inputL + inputR) * gain * line7.perform(resFade, time);
+        //our resonant filter
+        res.setFreq(CenterFrequency);
+        res.setQ(Q);
+        resOut = res.perform(inputL, inputR) * gain * line7.perform(resFade, time);
 
-        //We will use our Line class to fade in or out each oscillator type
+        //We will use our Line class to fade in or out each filter type
         if (BandPass)
         {
             bpFade = 1;

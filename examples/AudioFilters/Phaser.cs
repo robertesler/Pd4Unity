@@ -3,6 +3,7 @@ using UnityEngine;
 using PdPlusPlus;
 using static Chord;
 
+[RequireComponent(typeof(AudioSource))]
 public class Phaser : MonoBehaviour
 {
 

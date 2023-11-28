@@ -1,6 +1,11 @@
 using System;
-using UnityEngine;
 using PdPlusPlus;
+
+/*
+ This is a basic resonant filter as created by
+the RjDj.  It uses two poles and two zeros.
+Be careful with the scale variable, see my note below.
+ */
 
 public class ResonantFilter
 { 
@@ -9,15 +14,15 @@ public class ResonantFilter
     private ComplexPole cpole1 = new ComplexPole();
     private ComplexPole cpole2 = new ComplexPole();
     private Noise noise = new Noise();
-    private double freq = 100;
-    private double q = 1;
+    private double freq = 300;
+    private double q = 5;
     private int scale = 2;
 
 // Start is called before the first frame update
-    ResonantFilter()
+    public ResonantFilter(int sr)
     {
-        int sr = AudioSettings.outputSampleRate;
-        noise.setSampleRate(sr);
+        
+        cpole1.setSampleRate(sr);
     }
 
     ~ResonantFilter()
@@ -38,7 +43,8 @@ public class ResonantFilter
     public double perform(double in1, double in2)
     {
         double output = 0;
-        double n = noise.perform();
+         double n = (in1 + in2) * .5;
+        //double n = noise.perform();
         double stage1 = rzero1.perform(n, -1);
         double stage2 = rzero2.perform(stage1, 1);
         double[] f = getFreq();
@@ -60,7 +66,7 @@ public class ResonantFilter
     private double[] getFreq()
     {
         double[] output = { 0, 0 };
-        float twoPiT = (float)freq * (float)((Math.Atan(1) * 8) / noise.getSampleRate());
+        float twoPiT = (float)freq * (float)((Math.Atan(1) * 8) / cpole1.getSampleRate());
         double sin = Math.Sin(twoPiT);
         double cos = Math.Cos(twoPiT);
         output[0] = cos * getQ();
@@ -79,7 +85,7 @@ public class ResonantFilter
         double output = 0;
         if (q <= 0) q = .001;
         double i = freq / q;
-        float piBT = (float)i * (float)(Math.Atan(1) * -4) / noise.getSampleRate();
+        float piBT = (float)i * (float)(Math.Atan(1) * -4) / cpole1.getSampleRate();
         output = Math.Exp(piBT);
 
         return output;
