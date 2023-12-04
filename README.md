@@ -69,6 +69,6 @@ dbtopow() | [dbtopow]
 * ReadSoundFile and WriteSoundFile are experimental.  I recommend using Unity's built-in AudioClip API if trying to use audio files.
 
 # Limitations
-So far with my testing it appears when the Unity function ```OnAudioFilterRead(float [] data, int channels)``` is used to pass our audio buffer it is subject to the C# Garbage Collector.  This means there may be dropouts.  When used in the Editor the dropouts can be noticeable to very noticeable.  When used within a built game, it appears these dropouts are minimized quite a bit.  This library is not meant to be a high-performance audio engine like FMOD or Wwise, but instead show people how to create procedural audio routines without having to do a lot of heavy lifting for the user.  
+So far with my testing it appears when the Unity function ```OnAudioFilterRead(float [] data, int channels)``` is used to pass our audio buffer it is subject to the C# Garbage Collector.  This means there may be dropouts.  When used in the Editor the dropouts can be noticeable to very noticeable.  When used within a built game, it appears these dropouts are minimized quite a bit.  This library is not meant to be a high-performance audio engine like FMOD or Wwise, but instead show people how to create procedural audio routines without having to do a lot of heavy lifting for the user.  If you do want to build a more optimized plug-in for Unity, than Pd++ interfacing with the Unity Plug-In API would be the way to go. 
 
 
