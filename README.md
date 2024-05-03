@@ -12,6 +12,8 @@ Pd4Unity is written by Robert Esler.  Pd++ is written by Robert Esler.  Pure Dat
 
 # Versions (Win/MacOS)
 This version of the library right now works on Windows 10/11 and MacOS (13.x).  The .dll in the /libs folder are built for Windows, the .dylibs are for MacOS.  There are plans to test this on iOS and Android.  There is a Processing version of this same library that works for Android: https://github.com/robertesler/Pd4P3
+Unity on Windows may require the Windows Software Development Kit.  If you Unity can't load the .dll then this may be the case. You can install this from Visual Studio via "Tools/Get Tools..." and select "Desktop Development with C++".  
+Unity on Mac may have a security issue with the .dylib, you will need to approve the libpdplusplus.dylib in the System Preferences, "Privacy and Security".  If you need to get around this, you can build the pdplusplus dynamic library from the source on your machine.  See https://bitbucket.org/resler/pd/src/master/ for that repository.
 
 # How it Works
 Pd4Unity is largely a C# wrapper around a C++ backend compiled as a dynamic library.  These are in the /libs folder for Windows (.dll) and MacOS (.dylib) and come from the Pd++ library.  You could compile Pd++ for almost any architecture.  Included in this distribution are examples on how to use the library.  
