@@ -5,7 +5,7 @@ Pd++ for Unity (Pd4Unity) is a C# library that interfaces the Pure Data signal p
 Clone or download the libary.  Drag the Pd4Unity folder into a Unity Project.  Look at the examples for how to use the library.  Pd4Unity is purely C# code.  It cannot read Pure Data patch files, if you are looking for something like that than libpd may be for you: https://github.com/libpd/libpd
 
 # Copyright
-This software is copyrighted by Robert Esler, 2023.  
+This software is copyrighted by Robert Esler, 2024.  
 
 # Author(s)
 Pd4Unity is written by Robert Esler.  Pd++ is written by Robert Esler.  Pure Data is written by Miller Puckette and others:  see https://github.com/pure-data/pure-data
@@ -19,7 +19,7 @@ Unity on Mac may have a security issue with the .dylib, you will need to approve
 Pd4Unity is largely a C# wrapper around a C++ backend compiled as a dynamic library.  These are in the /libs folder for Windows (.dll) and MacOS (.dylib) and come from the Pd++ library.  You could compile Pd++ for almost any architecture.  Included in this distribution are examples on how to use the library.  
 
 # Tutorials
-More to come...
+There are currently examples included with the repository on how to use the library.  
 
 # Pd++
 Pd++ is a standalone C++ library based on the signal objects of Pure Data. The dynamic library used for this distribution is based on that.  You can compile it directly for your architecture if you want more advanced usage. More information can be found here: https://bitbucket.org/resler/pd/src/master/
