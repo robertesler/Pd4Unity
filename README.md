@@ -8,7 +8,7 @@ Clone or download the libary.  Drag the Pd4Unity folder into a Unity Project.  L
 This software is copyrighted by Robert Esler, 2024.  
 
 # Author(s)
-Pd4Unity is written by Robert Esler.  Pd++ is written by Robert Esler.  Pure Data is written by Miller Puckette and others:  see https://github.com/pure-data/pure-data
+Pd4Unity is written by Robert Esler and part of the non-profit urbanSTEW.  Pd++ is written by Robert Esler.  Pure Data is written by Miller Puckette and others:  see https://github.com/pure-data/pure-data
 
 # Versions (Win/MacOS)
 This version of the library right now works on Windows 10/11 and MacOS (13.x).  The .dll in the /libs folder are built for Windows, the .dylibs are for MacOS.  There are plans to test this on iOS and Android.  There is a Processing version of this same library that works for Android: https://github.com/robertesler/Pd4P3
