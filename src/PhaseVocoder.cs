@@ -97,7 +97,7 @@ namespace PdPlusPlus
 
         public void inSample(string file)
         {
-            PhaseVocoder_inSample0(file);
+            PhaseVocoder_inSample0(this.m_PhaseVocoder, file);
         }
 
         public void setSpeed(double s)
@@ -123,3 +123,4 @@ namespace PdPlusPlus
         #endregion Wrapper Methods
 
     }
+}//namespace

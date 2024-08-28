@@ -7,6 +7,7 @@ namespace PdPlusPlus
 
     public class VoltageControlFilter : PdMaster, IDisposable
     {
+        [StructLayout(LayoutKind.Sequential)]
         public struct vcfOutput
         {
             public double real;
@@ -36,7 +37,7 @@ namespace PdPlusPlus
     public static extern double VoltageControlFilter_getDouble(IntPtr ptr);
 #else
 
-        [DllImport("pdplusplusUnity")]
+    [DllImport("pdplusplusUnity")]
     public static extern IntPtr VoltageControlFilter_allocate0();
 
     [DllImport("pdplusplusUnity")]
