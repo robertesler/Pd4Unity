@@ -12,26 +12,21 @@ namespace PdPlusPlus
     public static extern IntPtr Envelope_allocate0();
 
     [DllImport("__Internal")]
+    public static extern IntPtr Envelope_allocate1(int ws, int p);
+
+    [DllImport("__Internal")]
     public static extern void Envelope_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
     public static externdouble Envelope_perform0(IntPtr ptr, double input);
 
-    [DllImport("__Internal")]
-    public static extern void Envelope_setWindowSize0(IntPtr ptr, int ws);
-
-    [DllImport("__Internal")]
-    public static extern void Envelope_setPeriod0(IntPtr ptr, int p);
-
-    [DllImport("__Internal")]
-    public static extern int Envelope_getWindowSize0(IntPtr ptr);
-
-    [DllImport("__Internal")]
-    public static extern int Envelope_getPeriod0(IntPtr ptr);
 #else
 
         [DllImport("pdplusplusUnity")]
         public static extern IntPtr Envelope_allocate0();
+
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr Envelope_allocate1(int ws, int p);
 
         [DllImport("pdplusplusUnity")]
         public static extern void Envelope_free0(IntPtr ptr);
@@ -39,17 +34,6 @@ namespace PdPlusPlus
         [DllImport("pdplusplusUnity")]
         public static extern double Envelope_perform0(IntPtr ptr, double input);
 
-    [DllImport("pdplusplusUnity")]
-        public static extern void Envelope_setWindowSize0(IntPtr ptr, int ws);
-
-        [DllImport("pdplusplusUnity")]
-        public static extern void Envelope_setPeriod0(IntPtr ptr, int p);
-
-        [DllImport("pdplusplusUnity")]
-        public static extern int Envelope_getWindowSize0(IntPtr ptr);
-
-        [DllImport("pdplusplusUnity")]
-        public static extern int Envelope_getPeriod0(IntPtr ptr);
 #endif
 
         private IntPtr m_Envelope;
@@ -57,6 +41,11 @@ namespace PdPlusPlus
         public Envelope()
         {
             this.m_Envelope = Envelope_allocate0();
+        }
+
+        public Envelope(int ws, int p)
+        {
+            this.m_Envelope = Envelope_allocate1(ws, p);
         }
 
         public void Dispose()
@@ -88,26 +77,6 @@ namespace PdPlusPlus
         public double perform(double freq)
         {
             return Envelope_perform0(this.m_Envelope, freq);
-        }
-
-        public void setWindowSize(int ws)
-        {
-            Envelope_setWindowSize0(this.m_Envelope, ws);
-        }
-
-        public void setPeriod(int p)
-        {
-            Envelope_setPeriod0(this.m_Envelope, p);
-        }
-
-        public int getWindowSize()
-        {
-            return Envelope_getWindowSize0(this.m_Envelope);
-        }
-
-        public int getPeriod()
-        {
-            return Envelope_getPeriod0(this.m_Envelope);
         }
 
         #endregion Wrapper Methods
