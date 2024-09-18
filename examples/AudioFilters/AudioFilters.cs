@@ -97,6 +97,7 @@ public class AudioFilters : MonoBehaviour
         double resOut = 0;
         double time = 200;
 
+        inputL = inputR = noise.perform();
         //our bandpass
         bp.setCenterFrequency(CenterFrequency);
         bp.setQ(Q);
