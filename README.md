@@ -19,7 +19,7 @@ Unity on Mac may have a security issue with the .dylib, you will need to approve
 Pd4Unity is largely a C# wrapper around a C++ backend compiled as a dynamic library.  These are in the /libs folder for Windows (.dll) and MacOS (.dylib) and come from the Pd++ library.  You could compile Pd++ for almost any architecture.  Included in this distribution are examples on how to use the library.  
 
 # Tutorials
-There are currently examples included with the repository on how to use the library.  
+Here is a short tutorial to get started: https://www.youtube.com/watch?v=l-q-ldqxS_Y&t=25s. There are also examples included with the repository that show how to use the library.  
 
 # Pd++
 Pd++ is a standalone C++ library based on the signal objects of Pure Data. The dynamic library used for this distribution is based on that.  You can compile it directly for your architecture if you want more advanced usage. More information can be found here: https://bitbucket.org/resler/pd/src/master/
