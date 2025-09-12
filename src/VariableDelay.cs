@@ -13,6 +13,9 @@ namespace PdPlusPlus
     public static extern IntPtr VariableDelay_allocate0();
 
     [DllImport("__Internal")]
+    public static extern IntPtr VariableDelay_allocate1(double deltime);
+
+    [DllImport("__Internal")]
     public static extern void VariableDelay_free0(IntPtr ptr);
 
     [DllImport("__Internal")]
@@ -27,6 +30,9 @@ namespace PdPlusPlus
 
         [DllImport("pdplusplusUnity")]
         public static extern IntPtr VariableDelay_allocate0();
+
+        [DllImport("pdplusplusUnity")]
+        public static extern IntPtr VariableDelay_allocate1();
 
         [DllImport("pdplusplusUnity")]
         public static extern void VariableDelay_free0(IntPtr ptr);
@@ -47,6 +53,11 @@ namespace PdPlusPlus
         public VariableDelay()
         {
             this.m_VariableDelay = VariableDelay_allocate0();
+        }
+
+        public VariableDleay(double deltime)
+        {
+            this.m_VariableDelay = VariableDelay_allocate1(deltime);
         }
 
         public void Dispose()
