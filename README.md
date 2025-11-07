@@ -18,6 +18,8 @@ Unity on Mac may have a security issue with the .dylib, you will need to approve
 # How it Works
 Pd4Unity is largely a C# wrapper around a C++ backend compiled as a dynamic library.  These are in the /libs folder for Windows (.dll) and MacOS (.dylib) and come from the Pd++ library.  You could compile Pd++ for almost any architecture.  Included in this distribution are examples on how to use the library.  
 
+As of Unity 6000.3.x there is now an experimental Scriptable Audio Pipeline that is realtime safe and optimized for performance.  This will ultimately replace the `OnAudioFilterRead()` method, but not for quite a while.  I will start refactoring the library so it can work with both soon.  Check back for updates.  For now there is an example in the folder examples/ScriptableAudioPipeline.  
+
 # Tutorials
 Here is a short tutorial to get started: https://www.youtube.com/watch?v=l-q-ldqxS_Y&t=25s. There are also examples included with the repository that show how to use the library.  
 
