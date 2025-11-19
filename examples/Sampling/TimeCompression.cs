@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using PdPlusPlus;
 
+[RequireComponent(typeof(AudioSource))]
 public class TimeCompression : MonoBehaviour
 {
     public float Transposition = -20.0F;

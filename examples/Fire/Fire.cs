@@ -4,6 +4,12 @@ using UnityEngine;
 using static FireGen;
 using PdPlusPlus;
 
+/*
+* Based on Andy Farnell's fire example from "Designing Sound"
+* You shouldn't have to do anything to get started, just add to an object with an Audio Source
+*/
+
+[RequireComponent(typeof(AudioSource))]
 public class Fire : MonoBehaviour
 {
 

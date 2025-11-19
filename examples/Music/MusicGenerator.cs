@@ -10,7 +10,8 @@ to give you the good stuff. : )
 Anyway, look at the adsr() function for one way to envelope
 a synthesizer.  For this demo, the synth is just a sine wave.
  */
-
+ 
+[RequireComponent(typeof(AudioSource))]
 public class MusicGenerator : MonoBehaviour
 {
     public int StartingNote = 60;

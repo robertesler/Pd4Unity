@@ -7,12 +7,14 @@ using static Foot;
  * This is based on Andy Farnell's "Designing Sound" example.
  * There are five textures: snow, grass, dirt, gravel, wood
  * See Textures.cs for more...
+ * Set the speed and texture to hear footsteps.  
  */
+ [RequireComponent(typeof(AudioSource))]
 public class Footsteps : MonoBehaviour
 {
 
     Foot foot = new Foot();
-    public float Speed = 0;
+    public float Speed = 0.1;// float between 0-1, 0 is off, 1 is super fast
     public int Texture = 0;
     public double Gain = 1.0F;
     private double outputL = 0.0F;

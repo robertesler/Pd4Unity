@@ -4,7 +4,10 @@ using UnityEngine;
 using static WaterGen;
 /*
  This a basic water generator based on Andy Farnell's book "Designing Sound". 
+ Set the rate to hear the change in frequency.
  */
+ 
+ [RequireComponent(typeof(AudioSource))]
 public class Water : MonoBehaviour
 {
     public double gain = 1.0F;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PdPlusPlus;
 
+[RequireComponent(typeof(AudioSource))]
 public class TimbreStamp : MonoBehaviour
 {
 

@@ -1,6 +1,11 @@
 using UnityEngine;
 using static EngineGen;
 
+/*
+* Based on Andy Farnell's Engine example from "Designing Sound"
+* Change the speed to hear results
+*/
+
 [RequireComponent(typeof(AudioSource))]
 public class Engine : MonoBehaviour
 {
