@@ -1,3 +1,5 @@
+//The IAudioGenerator is only available in Unity 6000.3 or newer. 
+#if UNITY_6000_3_OR_NEWER
 using Unity.Burst;
 using Unity.Collections;
 using Unity.IntegerTime;
@@ -13,6 +15,7 @@ using static UnityEngine.Audio.ProcessorInstance;
 
  See the RingMod struct below. 
 */
+
 
 public class Driver : MonoBehaviour, IAudioGenerator
 {
@@ -191,4 +194,4 @@ struct Control : GeneratorInstance.IControl<Realtime>
         setup = new GeneratorInstance.Setup(AudioSpeakerMode.Mono, format.sampleRate);
     }
 }
-
+#endif
