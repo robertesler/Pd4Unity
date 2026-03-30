@@ -71,11 +71,19 @@ namespace PdPlusPlusSAP
 
         private IntPtr m_ReadSoundFile;
         private double[] output;
-        private int buffer = 1024;
+        private int buffer;
 
         public void Create()
         {
             this.m_ReadSoundFile = ReadSoundFile_allocate0();
+            buffer = 1024;//default buffer size
+            output = new double[buffer];
+        }
+
+        public void Create(int buf)
+        {
+            this.m_ReadSoundFile = ReadSoundFile_allocate0();
+            buffer = buf;//default buffer size
             output = new double[buffer];
         }
 

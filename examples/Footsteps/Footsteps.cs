@@ -14,7 +14,7 @@ public class Footsteps : MonoBehaviour
 {
 
     Foot foot = new Foot();
-    public float Speed = 0.1;// float between 0-1, 0 is off, 1 is super fast
+    public float Speed = 0.1F;// float between 0-1, 0 is off, 1 is super fast
     public int Texture = 0;
     public double Gain = 1.0F;
     private double outputL = 0.0F;

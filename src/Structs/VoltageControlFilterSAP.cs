@@ -64,11 +64,12 @@ namespace PdPlusPlusSAP
         
 
         private VoltageControlFilter.vcfOutput vcf;
-        private double[] output = new double[2];
+        private double[] output;
 
         public void Create()
         {
             this.m_VoltageControlFilter = VoltageControlFilter_allocate0();
+            output = new double[2];
         }
 
         public void Dispose()
