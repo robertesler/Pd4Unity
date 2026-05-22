@@ -4,7 +4,7 @@ using System;
 namespace PdPlusPlusSAP
 {
 
-    public strut Envelope
+    public struct Envelope
     {
 
 #if UNITY_IPHONE

@@ -55,7 +55,7 @@ namespace PdPlusPlusSAP
 
         public void Dispose()
         {
-            f (this.m_ComplexZero != IntPtr.Zero)
+            if (this.m_ComplexZero != IntPtr.Zero)
             {
                 ComplexZero_free0(this.m_ComplexZero);
                 this.m_ComplexZero = IntPtr.Zero;
