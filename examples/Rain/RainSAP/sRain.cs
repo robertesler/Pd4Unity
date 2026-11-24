@@ -13,7 +13,7 @@ public struct sRain
     private HighPass hip;
     private LowPass lop;
     private Delay del;
-    private Drop drop;
+    private sDrop drop;
     private sGlassWindow glassWindow;
     private double delread;
     private double bpRainVol;
@@ -58,9 +58,23 @@ public struct sRain
 
     public void setIntensity(double intensity)
     {
-        
+            RainIntensity = map((float)intensity, 0, 100, .001F, .1F);
+            bpCf = map((float)intensity, 0, 100, 1400, 900);
+            bpQ = map((float)intensity, 0, 100, 2, 3);
+            RainVolume = map((float)intensity, 0, 100, 2, 4);
+            bpRainVol = map((float)intensity, 0, 100, 1, 3);
     }
 
+    public float map(float input, float rangeLow, float rangeHigh, float targetA, float targetB) {
+            // Ensure the input is within bounds
+            if (rangeLow == rangeHigh) return targetA; // Avoid division by zero
+
+            // Normalize input to a 0-1 scale based on the source range
+            float normalized = (input - rangeLow) / (rangeHigh - rangeLow);
+
+            // Scale to the target range
+            return targetA + normalized * (targetB - targetA);
+        }
     public double perform()
     {
         double dropInput = (del.perform(delread) * 24) + 6;

@@ -2,12 +2,12 @@ using PdPlusPlusSAP;
 
 public struct sDrop
 {
-    private PdPlusPlusSAP.VoltageControlFilter vcf;
+    private VoltageControlFilter vcf;
     private double vcfOut;
 
     public void Create()
     {
-        vcf = new PdPlusPlusSAP.VoltageControlFilter();
+        vcf.Create();
         vcf.setQ(.01);
     }
 

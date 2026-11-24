@@ -18,13 +18,14 @@ public class RainDriver : MonoBehaviour, IAudioGenerator
     /**********************
     Whatever variables you need to be public should be here.
     ***********************/
-    public float intensity = 100.0F;
+    public float intensity = 50.0F;
 
     public bool isFinite => false;
     public bool isRealtime => false;
     public DiscreteTime? length => null;
 
     /*
+    //I used this to test that my sRain, sDrop, sGlassWindow were properly implemented
     static void RequiresUnmanaged<T>()
     where T : unmanaged
     {
@@ -109,7 +110,7 @@ struct r_Realtime : GeneratorInstance.IRealtime
         Inintialize all of your 
         internal control variables here.
         **********************/
-        intensity = 100.0F;
+        intensity = 50.0F;
         rain = r;
         rain.Create();//make sure to create the MyMusic instance
     }
