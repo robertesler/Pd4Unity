@@ -64,12 +64,10 @@ namespace PdPlusPlusSAP
         
 
         private VoltageControlFilter.vcfOutput vcf;
-        private double[] output;
 
         public void Create()
         {
             this.m_VoltageControlFilter = VoltageControlFilter_allocate0();
-            output = new double[2];
         }
 
         public void Dispose()
@@ -85,6 +83,7 @@ namespace PdPlusPlusSAP
         //This returns both real and imaginary values in an arry.  
         public double[] perform(double input, double cf)
         {
+            double[] output = new double[2];
             vcf = VoltageControlFilter_perform0(this.m_VoltageControlFilter, input, cf);
             output[0] = vcf.real;
             output[1] = vcf.imaginary;
